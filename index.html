@@ -235,10 +235,6 @@ section{padding:120px 24px}
 }
 
 .science-header{text-align:center;margin-bottom:80px}
-.science-header h2{
-  font-size:clamp(32px,5vw,56px);font-weight:700;
-  letter-spacing:-1.5px;color:#f5f5f7;margin-bottom:16px;
-}
 .science-header p{font-size:17px;color:rgba(245,245,247,0.6);font-weight:300}
 
 .science-item{
@@ -565,10 +561,42 @@ footer p{font-size:12px;color:rgba(245,245,247,0.3);line-height:1.8}
 <!-- SCIENCE SECTION -->
 <section class="science-section" id="science">
   <div class="section-inner">
-    <div class="science-header">
-      <h2 style="line-height:1.15;opacity:0;transform:translateY(30px);transition:all 0.8s ease" id="heatTitle">
-        <span class="heat-char">지</span><span class="heat-char">구</span><span class="heat-char">는</span><span class="heat-char"> </span><span class="heat-char">왜</span><span class="heat-char"> </span><span class="heat-char">점</span><span class="heat-char heat-key">점</span><br><span class="heat-char heat-hot1">뜨</span><span class="heat-char heat-hot2">거</span><span class="heat-char heat-hot3">워</span><span class="heat-char heat-hot4">질</span><span class="heat-char heat-hot5">까</span><span class="heat-char heat-hot6">?</span>
+    <div class="science-header" style="margin-bottom:100px">
+
+      <!-- 섹션 라벨 -->
+      <div style="font-size:14px;color:var(--blue);font-weight:500;letter-spacing:1px;text-transform:uppercase;margin-bottom:24px;opacity:0;transition:opacity 0.6s ease" id="sciLabel">과학 개념 탐구</div>
+
+      <!-- 메인 타이틀 — 크게 -->
+      <h2 style="
+        font-size:clamp(52px,8vw,100px);
+        font-weight:800;letter-spacing:-3px;line-height:1.0;
+        opacity:0;transform:translateY(40px);
+        transition:all 0.9s cubic-bezier(0.25,0.46,0.45,0.94);
+        margin-bottom:32px;
+      " id="heatTitle">
+        <span class="heat-char">지</span><span class="heat-char">구</span><span class="heat-char">는</span><span class="heat-char"> </span><span class="heat-char">왜</span><span class="heat-char"> </span><span class="heat-char">점</span><span class="heat-char heat-key">점</span><br>
+        <span class="heat-char heat-hot1">뜨</span><span class="heat-char heat-hot2">거</span><span class="heat-char heat-hot3">워</span><span class="heat-char heat-hot4">질</span><span class="heat-char heat-hot5">까</span><span class="heat-char heat-hot6">?</span>
       </h2>
+
+      <!-- 구분선 -->
+      <div style="
+        width:48px;height:2px;
+        background:linear-gradient(90deg,var(--blue),transparent);
+        margin:0 auto 28px;
+        opacity:0;transition:opacity 0.6s ease 0.4s;
+      " id="sciDivider"></div>
+
+      <!-- 소제목 -->
+      <p id="sciSubtitle" style="
+        font-size:clamp(16px,2vw,20px);
+        color:rgba(245,245,247,0.55);
+        font-weight:300;line-height:1.7;
+        max-width:560px;margin:0 auto;
+        opacity:0;transition:opacity 0.8s ease 0.5s;
+      ">제시된 자료를 보며 관련된 과학 개념에 대해 알아봅시다.</p>
+
+    </div>
+
       <!-- 온실 효과 -->
     <div class="science-item" id="sci1">
       <div class="science-item-img">
@@ -1165,9 +1193,13 @@ const heatObserver = new IntersectionObserver((entries) => {
     if (!e.isIntersecting || heatAnimated) return;
     heatAnimated = true;
 
-    // 1. 타이틀 페이드인
+    // 1. 라벨, 타이틀, 구분선, 소제목 순서대로 등장
+    const label = document.getElementById('sciLabel');
+    if (label) label.style.opacity='1';
     const title = document.getElementById('heatTitle');
     if (title) { title.style.opacity='1'; title.style.transform='translateY(0)'; }
+    const divider = document.getElementById('sciDivider');
+    if (divider) divider.style.opacity='1';
     const sub = document.getElementById('sciSubtitle');
     if (sub) sub.style.opacity='1';
 

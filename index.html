@@ -702,16 +702,8 @@ footer p{font-size:12px;color:rgba(245,245,247,0.3);line-height:1.8}
         <p>지구의 대기는 태양 복사 에너지는 잘 통과시키지만, 지구 복사 에너지는 대부분 흡수한다. 이때 대기는 흡수한 복사 에너지의 일부를 지표면으로 다시 방출하여 지표면의 온도를 높이고 보온하는 역할을 하는데, 이를 <strong style="color:#f5f5f7">온실 효과</strong>라고 한다.</p>
         <a href="https://ko.wikipedia.org/wiki/온실_효과" target="_blank" class="science-link">더 알아보기</a>
         <span class="info-btn-wrap" style="position:relative;display:inline-block;margin-left:16px;vertical-align:middle">
-          <button class="info-btn" onmouseenter="showCard(this)" onmouseleave="hideCard(this)"
-            style="
-              display:inline-flex;align-items:center;gap:5px;
-              background:rgba(255,255,255,0.06);
-              border:1px solid rgba(255,255,255,0.15);
-              color:rgba(245,245,247,0.7);
-              font-size:13px;padding:6px 14px;border-radius:980px;
-              cursor:pointer;transition:all 0.2s;
-              font-family:inherit;
-            "
+          <button class="info-btn"
+            style="display:inline-flex;align-items:center;gap:5px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.15);color:rgba(245,245,247,0.7);font-size:13px;padding:6px 14px;border-radius:980px;cursor:pointer;transition:all 0.2s;font-family:inherit;"
             onmouseenter="this.style.background='rgba(255,255,255,0.12)';this.style.color='#f5f5f7';showCard(this)"
             onmouseleave="this.style.background='rgba(255,255,255,0.06)';this.style.color='rgba(245,245,247,0.7)';hideCard(this)">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
@@ -1421,35 +1413,41 @@ document.addEventListener('keydown', function(e) {
 
 // HOVER CARD
 function showCard(btn) {
-  const card = btn.parentElement.querySelector('.hover-card');
+  const wrap = btn.closest('.info-btn-wrap');
+  if (!wrap) return;
+  const card = wrap.querySelector('.hover-card');
   if (!card) return;
 
   card.style.display = 'block';
   card.style.opacity = '0';
 
-  const btnRect = btn.getBoundingClientRect();
-  const cardW = 420;
-  const cardH = card.offsetHeight || 400;
-  const margin = 12;
+  // 위치 계산 — 카드 높이 측정 후 배치
+  requestAnimationFrame(() => {
+    const btnRect = btn.getBoundingClientRect();
+    const cardW = Math.min(420, window.innerWidth - 24);
+    const cardH = card.offsetHeight || 420;
+    const margin = 12;
 
-  // 좌우 위치: 버튼 중앙 기준
-  let left = btnRect.left + btnRect.width / 2 - cardW / 2;
-  left = Math.max(12, Math.min(left, window.innerWidth - cardW - 12));
+    let left = btnRect.left + btnRect.width / 2 - cardW / 2;
+    left = Math.max(12, Math.min(left, window.innerWidth - cardW - 12));
 
-  // 위아래 위치: 아래에 공간 있으면 아래, 없으면 위
-  let top;
-  if (btnRect.bottom + cardH + margin < window.innerHeight) {
-    top = btnRect.bottom + margin;
-  } else {
-    top = btnRect.top - cardH - margin;
-  }
+    let top;
+    if (btnRect.bottom + cardH + margin < window.innerHeight) {
+      top = btnRect.bottom + margin;
+    } else {
+      top = Math.max(12, btnRect.top - cardH - margin);
+    }
 
-  card.style.left = left + 'px';
-  card.style.top = top + 'px';
-  card.style.opacity = '1';
+    card.style.width = cardW + 'px';
+    card.style.left = left + 'px';
+    card.style.top = top + 'px';
+    card.style.opacity = '1';
+  });
 }
 function hideCard(btn) {
-  const card = btn.parentElement.querySelector('.hover-card');
+  const wrap = btn.closest('.info-btn-wrap');
+  if (!wrap) return;
+  const card = wrap.querySelector('.hover-card');
   if (card) card.style.display = 'none';
 }
 

@@ -720,14 +720,15 @@ footer p{font-size:12px;color:rgba(245,245,247,0.3);line-height:1.8}
           <!-- 호버 카드 팝업 -->
           <div class="hover-card" style="
             display:none;
-            position:absolute;bottom:calc(100% + 12px);left:50%;transform:translateX(-50%);
+            position:fixed;
             width:420px;max-width:90vw;
             background:#1c1c1e;
             border:1px solid rgba(255,255,255,0.12);
             border-radius:16px;
-            box-shadow:0 20px 60px rgba(0,0,0,0.7);
-            z-index:9999;overflow:hidden;
+            box-shadow:0 20px 60px rgba(0,0,0,0.8);
+            z-index:99999;overflow:hidden;
             pointer-events:none;
+            transition:opacity 0.15s ease;
           ">
             <!-- 화살표 -->
             <div style="position:absolute;bottom:-7px;left:50%;transform:translateX(-50%);width:14px;height:7px;overflow:hidden">
@@ -1354,14 +1355,31 @@ document.addEventListener('keydown', function(e) {
 // HOVER CARD
 function showCard(btn) {
   const card = btn.parentElement.querySelector('.hover-card');
-  if (card) {
-    card.style.display = 'block';
-    // 화면 밖 넘침 방지
-    const rect = card.getBoundingClientRect();
-    if (rect.left < 0) card.style.left = '0';
-    if (rect.right > window.innerWidth) card.style.left = 'auto';
-    card.style.right = rect.right > window.innerWidth ? '0' : '';
+  if (!card) return;
+
+  card.style.display = 'block';
+  card.style.opacity = '0';
+
+  const btnRect = btn.getBoundingClientRect();
+  const cardW = 420;
+  const cardH = card.offsetHeight || 400;
+  const margin = 12;
+
+  // 좌우 위치: 버튼 중앙 기준
+  let left = btnRect.left + btnRect.width / 2 - cardW / 2;
+  left = Math.max(12, Math.min(left, window.innerWidth - cardW - 12));
+
+  // 위아래 위치: 아래에 공간 있으면 아래, 없으면 위
+  let top;
+  if (btnRect.bottom + cardH + margin < window.innerHeight) {
+    top = btnRect.bottom + margin;
+  } else {
+    top = btnRect.top - cardH - margin;
   }
+
+  card.style.left = left + 'px';
+  card.style.top = top + 'px';
+  card.style.opacity = '1';
 }
 function hideCard(btn) {
   const card = btn.parentElement.querySelector('.hover-card');

@@ -555,7 +555,7 @@ footer p{font-size:12px;color:rgba(245,245,247,0.3);line-height:1.8}
         <div class="stat-card-title">푹푹 찌는 열대야</div>
         <div class="stat-card-desc">폭염이 심해지면서 열대야 일수가 급증하고 있다. 수면과 건강에 직접적인 위협.</div>
         <br>
-        <a href="https://www.youtube.com/watch?v=uKqxlJt7VZo" target="_blank" style="color:var(--blue);font-size:13px;text-decoration:none">관련 영상 보기 →</a>
+        <a href="#video" style="color:var(--blue);font-size:13px;text-decoration:none" onclick="document.getElementById('video').scrollIntoView({behavior:'smooth'});return false;">관련 영상 보기 →</a>
       </div>
     </div>
   </div>
@@ -630,11 +630,10 @@ footer p{font-size:12px;color:rgba(245,245,247,0.3);line-height:1.8}
       aspect-ratio:16/9;background:#000;
     ">
       <iframe
-        src="https://www.youtube.com/embed/uKqxlJt7VZo?rel=0&modestbranding=1&color=white"
+        src="https://www.youtube.com/embed/uKqxlJt7VZo?rel=0&modestbranding=1&color=white&fs=0"
         title="푹푹 찌는 열대야 — 폭염의 실태"
         style="position:absolute;inset:0;width:100%;height:100%;border:none;"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowfullscreen>
+        allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
       </iframe>
     </div>
   </div>

@@ -581,7 +581,7 @@ footer p{font-size:12px;color:rgba(245,245,247,0.3);line-height:1.8}
 <section class="science-section" id="science">
   <div class="section-inner">
     <div class="science-header">
-      <h2 class="fade-up" style="line-height:1.15" id="heatTitle">
+      <h2 style="line-height:1.15;opacity:0;transform:translateY(30px);transition:all 0.8s ease" id="heatTitle">
         <span class="heat-char">지</span><span class="heat-char">구</span><span class="heat-char">는</span><span class="heat-char"> </span><span class="heat-char">왜</span><span class="heat-char"> </span><span class="heat-char">점</span><span class="heat-char heat-key">점</span><br><span class="heat-char heat-hot1">뜨</span><span class="heat-char heat-hot2">거</span><span class="heat-char heat-hot3">워</span><span class="heat-char heat-hot4">질</span><span class="heat-char heat-hot5">까</span><span class="heat-char heat-hot6">?</span>
       </h2>
       <!-- 온도 상승 비주얼 바 -->
@@ -610,7 +610,7 @@ footer p{font-size:12px;color:rgba(245,245,247,0.3);line-height:1.8}
           <span style="font-size:16px;color:rgba(245,245,247,0.5)">°C 상승</span>
         </div>
       </div>
-      <p class="fade-up">과학 개념 탐구 — 온실 효과, 온실 기체, 지구온난화</p>
+      <p id="sciSubtitle" style="opacity:0;transition:opacity 0.8s ease 0.3s">과학 개념 탐구 — 온실 효과, 온실 기체, 지구온난화</p>
     </div>
 
     <!-- 온실 효과 -->
@@ -1314,42 +1314,44 @@ window.addEventListener('scroll', () => {
 });
 
 // HEAT VISUAL ANIMATION
+let heatAnimated = false;
 const heatObserver = new IntersectionObserver((entries) => {
   entries.forEach(e => {
-    if (!e.isIntersecting) return;
+    if (!e.isIntersecting || heatAnimated) return;
+    heatAnimated = true;
 
-    // Show container
+    // 1. 타이틀 페이드인
+    const title = document.getElementById('heatTitle');
+    if (title) { title.style.opacity='1'; title.style.transform='translateY(0)'; }
+    const sub = document.getElementById('sciSubtitle');
+    if (sub) sub.style.opacity='1';
+
+    // 2. 비주얼 컨테이너 등장
     const visual = document.getElementById('heatVisual');
-    if (visual) visual.style.opacity = '1';
+    if (visual) setTimeout(() => visual.style.opacity='1', 400);
 
-    // Animate bars with delay
+    // 3. 막대 그래프 순서대로 올라오기
     document.querySelectorAll('.heat-bar').forEach(bar => {
-      const delay = parseInt(bar.dataset.delay || 0);
+      const delay = 500 + parseInt(bar.dataset.delay || 0);
       setTimeout(() => bar.classList.add('active'), delay);
     });
 
-    // Animate degree counter
+    // 4. 온도 카운터
     const degEl = document.getElementById('heatDegree');
     if (degEl) {
-      let val = 0, target = 1.2;
-      const step = () => {
-        val = Math.min(val + 0.03, target);
-        degEl.textContent = '+' + val.toFixed(1);
-        if (val < target) requestAnimationFrame(step);
-      };
-      setTimeout(step, 800);
-    }
-
-    // Animate title chars — pulse red glow
-    document.querySelectorAll('.heat-char').forEach((c, i) => {
       setTimeout(() => {
-        c.style.transition = 'color 0.4s, text-shadow 0.4s';
-      }, i * 60);
-    });
+        let val = 0;
+        const interval = setInterval(() => {
+          val = Math.min(val + 0.05, 1.2);
+          degEl.textContent = '+' + val.toFixed(1);
+          if (val >= 1.2) clearInterval(interval);
+        }, 40);
+      }, 1200);
+    }
 
     heatObserver.disconnect();
   });
-}, { threshold: 0.4 });
+}, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
 
 const heatTitle = document.getElementById('heatTitle');
 if (heatTitle) heatObserver.observe(heatTitle);

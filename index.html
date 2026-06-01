@@ -21,6 +21,57 @@
 html{scroll-behavior:smooth}
 body{font-family:'Noto Sans KR',sans-serif;background:#000;color:#fff;overflow-x:hidden}
 
+/* COUNTER ANIMATION */
+.stat-number[data-target]{transition:all 0.3s}
+.counter-wrap{display:inline-block}
+
+/* TYPING EFFECT */
+.typing-cursor{display:inline-block;width:3px;height:1em;background:var(--blue);margin-left:4px;animation:blink 1s infinite;vertical-align:text-bottom}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+
+/* GLOW PULSE on stat cards */
+.stat-card:hover{
+  box-shadow:0 0 40px rgba(0,113,227,0.15),0 20px 60px rgba(0,0,0,0.4);
+  border-top:1px solid rgba(0,113,227,0.3);
+}
+
+/* TEMPERATURE BAR */
+.temp-bar-wrap{margin-top:20px}
+.temp-bar-bg{
+  height:4px;background:rgba(255,255,255,0.08);
+  border-radius:4px;overflow:hidden;
+}
+.temp-bar-fill{
+  height:100%;width:0%;
+  background:linear-gradient(90deg,#0071e3,#ff6b35);
+  border-radius:4px;
+  transition:width 2s cubic-bezier(0.25,0.46,0.45,0.94);
+  box-shadow:0 0 8px rgba(255,107,53,0.5);
+}
+
+/* SCIENCE CARD GLOW */
+.science-item-img{position:relative}
+.science-item-img::after{
+  content:'';position:absolute;inset:0;
+  border-radius:18px;
+  box-shadow:inset 0 0 0 1px rgba(0,113,227,0);
+  transition:box-shadow 0.4s;
+}
+.science-item-img:hover::after{
+  box-shadow:inset 0 0 0 1.5px rgba(0,113,227,0.4),0 0 30px rgba(0,113,227,0.15);
+}
+
+/* FLOATING MOLECULES */
+#moleculeCanvas{
+  position:fixed;top:0;left:0;width:100%;height:100%;
+  pointer-events:none;z-index:0;opacity:0.25;
+}
+
+/* SCROLL PROGRESS GLOW */
+.progress-bar{
+  box-shadow:0 0 10px rgba(0,113,227,0.6),0 0 20px rgba(0,113,227,0.3);
+}
+
 /* NAV */
 nav{
   position:fixed;top:0;left:0;right:0;z-index:100;
@@ -48,12 +99,7 @@ nav{
   position:absolute;inset:0;
   background:radial-gradient(ellipse 100% 80% at 50% 70%, #05101f 0%, #000 65%);
 }
-.hero-earth{
-  position:absolute;bottom:-10%;left:50%;transform:translateX(-50%);
-  width:min(700px,110vw);opacity:0.35;
-  animation:earthFloat 8s ease-in-out infinite;
-  font-size:0;color:transparent;
-}
+/* earth canvas handled by Three.js */
 @keyframes earthFloat{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(-20px)}}
 .hero-glow{
   position:absolute;top:40%;left:50%;transform:translate(-50%,-50%);
@@ -430,6 +476,7 @@ footer p{font-size:12px;color:rgba(245,245,247,0.3);line-height:1.8}
 
 <div class="progress-bar" id="progress"></div>
 
+<canvas id="moleculeCanvas"></canvas>
 <nav>
   <span class="nav-logo">🌍 에어컨 사용과 지구온난화</span>
   <div class="nav-links">
@@ -446,11 +493,8 @@ footer p{font-size:12px;color:rgba(245,245,247,0.3);line-height:1.8}
 <section class="hero">
   <div class="hero-bg"></div>
   <div class="hero-glow"></div>
-  <img class="hero-earth"
-    src="https://images.unsplash.com/photo-1614730321146-b6fa6a46bcb4?w=900&q=80"
-    alt=""
-    onerror="this.style.display='none'"
-    crossorigin="anonymous">
+  <canvas id="particleCanvas" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0"></canvas>
+  <canvas id="earthCanvas" style="position:absolute;inset:0;width:100%;height:100%;opacity:0.85;pointer-events:none;z-index:1"></canvas>
   <div class="hero-content">
     <div class="hero-tag">과학 탐구 수업 자료</div>
     <h1 class="hero-title">에어컨 사용과<br>지구온난화</h1>
@@ -472,7 +516,8 @@ footer p{font-size:12px;color:rgba(245,245,247,0.3);line-height:1.8}
     <div class="stat-cards">
       <div class="stat-card">
         <div class="stat-icon">🌡️</div>
-        <div class="stat-number">+1.2<span>°C</span></div>
+        <div class="stat-number" id="counter1">+1.2<span>°C</span></div>
+      <div class="temp-bar-wrap"><div class="temp-bar-bg"><div class="temp-bar-fill" id="tempBar1" data-width="85"></div></div></div>
         <div class="stat-card-title">지구 평균 온도 상승</div>
         <div class="stat-card-desc">1880년 이후 지구 평균기온은 꾸준히 상승하고 있다. 특히 최근 10년간 가속화되는 추세.</div>
         <br>
@@ -480,7 +525,7 @@ footer p{font-size:12px;color:rgba(245,245,247,0.3);line-height:1.8}
       </div>
       <div class="stat-card">
         <div class="stat-icon">🏥</div>
-        <div class="stat-number">3,704<span>명</span></div>
+        <div class="stat-number" id="counter2" data-target="3704">0<span>명</span></div>
         <div class="stat-card-title">2024 온열질환자 급증</div>
         <div class="stat-card-desc">폭염이 심해지면서 온열질환으로 병원을 찾는 사람이 늘어나고 있다.</div>
         <br>
@@ -488,7 +533,7 @@ footer p{font-size:12px;color:rgba(245,245,247,0.3);line-height:1.8}
       </div>
       <div class="stat-card">
         <div class="stat-icon">🌙</div>
-        <div class="stat-number">역대급<span></span></div>
+        <div class="stat-number" id="counter3">역대급</div>
         <div class="stat-card-title">푹푹 찌는 열대야</div>
         <div class="stat-card-desc">폭염이 심해지면서 열대야 일수가 급증하고 있다. 수면과 건강에 직접적인 위협.</div>
         <br>
@@ -869,6 +914,320 @@ footer p{font-size:12px;color:rgba(245,245,247,0.3);line-height:1.8}
 </footer>
 
 <script>
+// ══════════════════════════════
+// THREE.JS 3D EARTH
+// ══════════════════════════════
+(function initEarth() {
+  const canvas = document.getElementById('earthCanvas');
+  if (!canvas) return;
+
+  const W = canvas.offsetWidth, H = canvas.offsetHeight;
+  canvas.width = W; canvas.height = H;
+  const ctx = canvas.getContext('2d');
+
+  // CSS-only 3D earth using radial gradients + animated rotation
+  let angle = 0;
+  const cx = W / 2, cy = H * 0.72, R = Math.min(W, H) * 0.38;
+
+  function drawEarth(a) {
+    ctx.clearRect(0, 0, W, H);
+
+    // Atmosphere glow
+    const atmGrad = ctx.createRadialGradient(cx, cy, R * 0.9, cx, cy, R * 1.25);
+    atmGrad.addColorStop(0, 'rgba(0,150,255,0.15)');
+    atmGrad.addColorStop(0.5, 'rgba(0,80,200,0.06)');
+    atmGrad.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.beginPath();
+    ctx.arc(cx, cy, R * 1.25, 0, Math.PI * 2);
+    ctx.fillStyle = atmGrad;
+    ctx.fill();
+
+    // Earth base
+    const earthGrad = ctx.createRadialGradient(cx - R*0.25, cy - R*0.2, R*0.1, cx, cy, R);
+    earthGrad.addColorStop(0, '#2a6e9e');
+    earthGrad.addColorStop(0.3, '#1a4f7a');
+    earthGrad.addColorStop(0.6, '#0d2e4e');
+    earthGrad.addColorStop(1, '#050f1a');
+    ctx.beginPath();
+    ctx.arc(cx, cy, R, 0, Math.PI * 2);
+    ctx.fillStyle = earthGrad;
+    ctx.fill();
+
+    // Continent patches — animated with rotation
+    const continents = [
+      {x: 0.15, y: -0.1, w: 0.18, h: 0.35, color: '#2d7a3a'},  // Americas
+      {x: 0.42, y: -0.15, w: 0.14, h: 0.28, color: '#3a8a40'},  // Europe/Africa
+      {x: 0.62, y: -0.2, w: 0.22, h: 0.3, color: '#2d7a3a'},   // Asia
+      {x: 0.68, y: 0.25, w: 0.12, h: 0.18, color: '#3a8a40'},  // Australia
+    ];
+
+    ctx.save();
+    ctx.beginPath();
+    ctx.arc(cx, cy, R, 0, Math.PI * 2);
+    ctx.clip();
+
+    continents.forEach(c => {
+      const px = cx + (((c.x + a * 0.12) % 1.2) - 0.6) * R * 2.2;
+      const py = cy + c.y * R * 2;
+      const gx = ctx.createRadialGradient(px, py, 0, px, py, c.w * R * 1.8);
+      gx.addColorStop(0, c.color + 'cc');
+      gx.addColorStop(0.5, c.color + '66');
+      gx.addColorStop(1, 'transparent');
+      ctx.beginPath();
+      ctx.ellipse(px, py, c.w * R * 1.8, c.h * R * 1.2, 0.2, 0, Math.PI * 2);
+      ctx.fillStyle = gx;
+      ctx.fill();
+    });
+    ctx.restore();
+
+    // Ocean shimmer
+    ctx.save();
+    ctx.beginPath();
+    ctx.arc(cx, cy, R, 0, Math.PI * 2);
+    ctx.clip();
+    for (let i = 0; i < 5; i++) {
+      const sx = cx + Math.cos(a * 2 + i * 1.3) * R * 0.4;
+      const sy = cy + Math.sin(a * 1.5 + i * 1.1) * R * 0.3;
+      const sg = ctx.createRadialGradient(sx, sy, 0, sx, sy, R * 0.3);
+      sg.addColorStop(0, 'rgba(100,200,255,0.08)');
+      sg.addColorStop(1, 'transparent');
+      ctx.fillStyle = sg;
+      ctx.beginPath();
+      ctx.arc(sx, sy, R * 0.3, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    ctx.restore();
+
+    // Ice caps
+    ctx.save();
+    ctx.beginPath();
+    ctx.arc(cx, cy, R, 0, Math.PI * 2);
+    ctx.clip();
+    // North pole
+    const npg = ctx.createRadialGradient(cx, cy - R * 0.9, 0, cx, cy - R * 0.9, R * 0.35);
+    npg.addColorStop(0, 'rgba(220,240,255,0.7)');
+    npg.addColorStop(1, 'transparent');
+    ctx.fillStyle = npg;
+    ctx.beginPath();
+    ctx.ellipse(cx, cy - R * 0.85, R * 0.35, R * 0.18, 0, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+
+    // Specular highlight
+    const specGrad = ctx.createRadialGradient(cx - R*0.3, cy - R*0.3, 0, cx - R*0.3, cy - R*0.3, R * 0.6);
+    specGrad.addColorStop(0, 'rgba(255,255,255,0.12)');
+    specGrad.addColorStop(0.5, 'rgba(255,255,255,0.03)');
+    specGrad.addColorStop(1, 'transparent');
+    ctx.beginPath();
+    ctx.arc(cx, cy, R, 0, Math.PI * 2);
+    ctx.fillStyle = specGrad;
+    ctx.fill();
+
+    // Night side shadow
+    const shadowGrad = ctx.createLinearGradient(cx + R * 0.2, cy, cx + R, cy);
+    shadowGrad.addColorStop(0, 'transparent');
+    shadowGrad.addColorStop(1, 'rgba(0,0,0,0.6)');
+    ctx.beginPath();
+    ctx.arc(cx, cy, R, 0, Math.PI * 2);
+    ctx.fillStyle = shadowGrad;
+    ctx.fill();
+
+    // City lights on night side
+    ctx.save();
+    ctx.beginPath();
+    ctx.arc(cx, cy, R, 0, Math.PI * 2);
+    ctx.clip();
+    const cityLights = [
+      [cx + R*0.45, cy - R*0.15], [cx + R*0.55, cy - R*0.05],
+      [cx + R*0.6, cy + R*0.1], [cx + R*0.5, cy + R*0.2],
+      [cx + R*0.7, cy - R*0.2], [cx + R*0.75, cy + R*0.05],
+    ];
+    cityLights.forEach(([lx, ly]) => {
+      const lg = ctx.createRadialGradient(lx, ly, 0, lx, ly, 8);
+      lg.addColorStop(0, 'rgba(255,220,120,0.6)');
+      lg.addColorStop(1, 'transparent');
+      ctx.fillStyle = lg;
+      ctx.beginPath();
+      ctx.arc(lx, ly, 8, 0, Math.PI * 2);
+      ctx.fill();
+    });
+    ctx.restore();
+
+    // Outer rim glow
+    const rimGrad = ctx.createRadialGradient(cx, cy, R * 0.92, cx, cy, R);
+    rimGrad.addColorStop(0, 'transparent');
+    rimGrad.addColorStop(0.5, 'rgba(0,120,255,0.08)');
+    rimGrad.addColorStop(1, 'rgba(0,80,200,0.2)');
+    ctx.beginPath();
+    ctx.arc(cx, cy, R, 0, Math.PI * 2);
+    ctx.fillStyle = rimGrad;
+    ctx.fill();
+  }
+
+  function animateEarth() {
+    angle += 0.003;
+    drawEarth(angle);
+    requestAnimationFrame(animateEarth);
+  }
+  animateEarth();
+
+  // Resize
+  window.addEventListener('resize', () => {
+    canvas.width = canvas.offsetWidth;
+    canvas.height = canvas.offsetHeight;
+  });
+})();
+
+// ══════════════════════════════
+// PARTICLE SYSTEM (Hero)
+// ══════════════════════════════
+(function initParticles() {
+  const canvas = document.getElementById('particleCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  canvas.width = canvas.offsetWidth;
+  canvas.height = canvas.offsetHeight;
+
+  const particles = Array.from({length: 60}, () => ({
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height,
+    r: Math.random() * 1.5 + 0.3,
+    vx: (Math.random() - 0.5) * 0.3,
+    vy: -Math.random() * 0.4 - 0.1,
+    alpha: Math.random() * 0.4 + 0.1,
+    color: Math.random() > 0.5 ? '0,113,227' : '100,200,255',
+  }));
+
+  function drawParticles() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    particles.forEach(p => {
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(${p.color},${p.alpha})`;
+      ctx.fill();
+
+      p.x += p.vx;
+      p.y += p.vy;
+      if (p.y < -10) { p.y = canvas.height + 10; p.x = Math.random() * canvas.width; }
+      if (p.x < 0) p.x = canvas.width;
+      if (p.x > canvas.width) p.x = 0;
+    });
+    requestAnimationFrame(drawParticles);
+  }
+  drawParticles();
+})();
+
+// ══════════════════════════════
+// FLOATING MOLECULES (Background)
+// ══════════════════════════════
+(function initMolecules() {
+  const canvas = document.getElementById('moleculeCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  const mols = Array.from({length: 18}, (_, i) => ({
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height,
+    vx: (Math.random() - 0.5) * 0.2,
+    vy: (Math.random() - 0.5) * 0.2,
+    r: Math.random() * 3 + 2,
+    bonds: Math.floor(Math.random() * 2) + 1,
+    angle: Math.random() * Math.PI * 2,
+    aSpeed: (Math.random() - 0.5) * 0.005,
+    alpha: Math.random() * 0.15 + 0.05,
+  }));
+
+  function drawMolecule(m) {
+    // Central atom
+    ctx.beginPath();
+    ctx.arc(m.x, m.y, m.r, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(0,113,227,${m.alpha})`;
+    ctx.fill();
+
+    // Bond atoms
+    for (let i = 0; i < m.bonds; i++) {
+      const bAngle = m.angle + (i * Math.PI / m.bonds);
+      const bx = m.x + Math.cos(bAngle) * (m.r * 4);
+      const by = m.y + Math.sin(bAngle) * (m.r * 4);
+      ctx.beginPath();
+      ctx.moveTo(m.x, m.y);
+      ctx.lineTo(bx, by);
+      ctx.strokeStyle = `rgba(0,113,227,${m.alpha * 0.5})`;
+      ctx.lineWidth = 0.5;
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.arc(bx, by, m.r * 0.6, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(100,200,255,${m.alpha})`;
+      ctx.fill();
+    }
+  }
+
+  function animateMolecules() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    mols.forEach(m => {
+      m.x += m.vx; m.y += m.vy; m.angle += m.aSpeed;
+      if (m.x < -20) m.x = canvas.width + 20;
+      if (m.x > canvas.width + 20) m.x = -20;
+      if (m.y < -20) m.y = canvas.height + 20;
+      if (m.y > canvas.height + 20) m.y = -20;
+      drawMolecule(m);
+    });
+    requestAnimationFrame(animateMolecules);
+  }
+  animateMolecules();
+
+  window.addEventListener('resize', () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  });
+})();
+
+// ══════════════════════════════
+// COUNTER ANIMATION
+// ══════════════════════════════
+function animateCounter(el, target, duration) {
+  let start = 0, startTime = null;
+  function step(ts) {
+    if (!startTime) startTime = ts;
+    const progress = Math.min((ts - startTime) / duration, 1);
+    const ease = 1 - Math.pow(1 - progress, 3);
+    const val = Math.floor(ease * target);
+    const span = el.querySelector('span');
+    el.innerHTML = val.toLocaleString('ko-KR') + (span ? span.outerHTML : '<span>명</span>');
+    if (progress < 1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+
+// Temperature bar animation
+function animateTempBar(barEl, targetWidth) {
+  setTimeout(() => { barEl.style.width = targetWidth + '%'; }, 300);
+}
+
+// Observe stat cards for counter trigger
+const counterObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (!e.isIntersecting) return;
+    const id = e.target.id;
+    if (id === 'counter2') {
+      animateCounter(e.target, 3704, 2000);
+    }
+    const bar = document.getElementById('tempBar1');
+    if (bar && !bar.dataset.animated) {
+      bar.dataset.animated = '1';
+      animateTempBar(bar, 85);
+    }
+    counterObserver.unobserve(e.target);
+  });
+}, {threshold: 0.5});
+
+['counter1','counter2'].forEach(id => {
+  const el = document.getElementById(id);
+  if (el) counterObserver.observe(el);
+});
+
 // IMAGE FALLBACK — gradient on error
 document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('img[data-grad]').forEach(img => {

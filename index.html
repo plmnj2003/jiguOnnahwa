@@ -700,6 +700,7 @@ footer p{font-size:12px;color:rgba(245,245,247,0.3);line-height:1.8}
         <span class="science-badge">개념 01</span>
         <h3>온실 효과</h3>
         <p>지구의 대기는 태양 복사 에너지는 잘 통과시키지만, 지구 복사 에너지는 대부분 흡수한다. 이때 대기는 흡수한 복사 에너지의 일부를 지표면으로 다시 방출하여 지표면의 온도를 높이고 보온하는 역할을 하는데, 이를 <strong style="color:#f5f5f7">온실 효과</strong>라고 한다.</p>
+        <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:8px">
         <a href="https://ko.wikipedia.org/wiki/온실_효과" target="_blank" class="science-link">더 알아보기</a>
         <span class="info-btn-wrap" style="position:relative;display:inline-block;margin-left:16px;vertical-align:middle">
           <button class="info-btn"
@@ -711,10 +712,9 @@ footer p{font-size:12px;color:rgba(245,245,247,0.3);line-height:1.8}
           </button>
           <!-- 호버 카드 팝업 -->
           <div class="hover-card" style="
-            display:block;
-            position:relative;
-            width:100%;
-            margin-top:16px;
+            display:none;
+            position:fixed;
+            width:420px;max-width:90vw;
             background:#1c1c1e;
             border:1px solid rgba(255,255,255,0.12);
             border-radius:16px;
@@ -794,6 +794,7 @@ footer p{font-size:12px;color:rgba(245,245,247,0.3);line-height:1.8}
             </div>
           </div>
         </span>
+        </div>
       </div>
     </div>
 
@@ -807,6 +808,7 @@ footer p{font-size:12px;color:rgba(245,245,247,0.3);line-height:1.8}
         <span class="science-badge">개념 02</span>
         <h3>온실 기체</h3>
         <p>지구 복사 에너지를 흡수하고 다시 방출하여 온실효과를 일으키는 기체를 <strong style="color:#f5f5f7">온실 기체</strong>라 한다. 대표적으로 이산화탄소(CO₂), 수증기(H₂O), 메탄(CH₄), 아산화질소(N₂O) 등이 있다.</p>
+        <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:8px">
         <a href="https://ko.wikipedia.org/wiki/온실_기체" target="_blank" class="science-link">더 알아보기</a>
         <span class="info-btn-wrap" style="position:relative;display:inline-block;margin-left:16px;vertical-align:middle">
           <button class="info-btn"
@@ -816,7 +818,7 @@ footer p{font-size:12px;color:rgba(245,245,247,0.3);line-height:1.8}
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
             한눈에 보기
           </button>
-          <div class="hover-card" style="display:block;position:relative;margin-top:16px;width:420px;max-width:90vw;background:#1c1c1e;border:1px solid rgba(255,255,255,0.12);border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,0.8);z-index:99999;overflow:hidden;pointer-events:none;transition:opacity 0.15s ease;">
+          <div class="hover-card" style="display:none;position:fixed;width:420px;max-width:90vw;background:#1c1c1e;border:1px solid rgba(255,255,255,0.12);border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,0.8);z-index:99999;overflow:hidden;pointer-events:none;transition:opacity 0.15s ease;">
             <!-- 헤더 -->
             <div style="background:#2c2c2e;padding:14px 18px;border-bottom:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;gap:8px">
               <span style="font-size:16px">💨</span>
@@ -875,6 +877,7 @@ footer p{font-size:12px;color:rgba(245,245,247,0.3);line-height:1.8}
             </div>
           </div>
         </span>
+        </div>
       </div>
     </div>
 
@@ -1414,42 +1417,39 @@ document.addEventListener('keydown', function(e) {
 
 // HOVER CARD
 function showCard(btn) {
-  const wrap = btn.closest('.info-btn-wrap');
+  var wrap = btn.closest('.info-btn-wrap');
   if (!wrap) return;
-  const card = wrap.querySelector('.hover-card');
+  var card = wrap.querySelector('.hover-card');
   if (!card) return;
 
+  // 먼저 숨긴 상태로 display:block 해서 높이 측정
+  card.style.visibility = 'hidden';
   card.style.display = 'block';
-  card.style.opacity = '0';
 
-  // 위치 계산 — 카드 높이 측정 후 배치
-  requestAnimationFrame(() => {
-    const btnRect = btn.getBoundingClientRect();
-    const cardW = Math.min(420, window.innerWidth - 24);
-    const cardH = card.offsetHeight || 420;
-    const margin = 12;
+  var btnRect = btn.getBoundingClientRect();
+  var cardW = Math.min(420, window.innerWidth - 24);
+  var cardH = card.offsetHeight;
+  var margin = 10;
 
-    let left = btnRect.left + btnRect.width / 2 - cardW / 2;
-    left = Math.max(12, Math.min(left, window.innerWidth - cardW - 12));
+  var left = btnRect.left + btnRect.width / 2 - cardW / 2;
+  left = Math.max(12, Math.min(left, window.innerWidth - cardW - 12));
 
-    let top;
-    if (btnRect.bottom + cardH + margin < window.innerHeight) {
-      top = btnRect.bottom + margin;
-    } else {
-      top = Math.max(12, btnRect.top - cardH - margin);
-    }
+  var top = (btnRect.bottom + cardH + margin < window.innerHeight)
+    ? btnRect.bottom + margin
+    : Math.max(12, btnRect.top - cardH - margin);
 
-    card.style.width = cardW + 'px';
-    card.style.left = left + 'px';
-    card.style.top = top + 'px';
-    card.style.opacity = '1';
-  });
+  card.style.width = cardW + 'px';
+  card.style.left = left + 'px';
+  card.style.top = (top + window.scrollY) + 'px';
+  card.style.position = 'fixed';
+  card.style.top = top + 'px';
+  card.style.visibility = 'visible';
 }
 function hideCard(btn) {
-  const wrap = btn.closest('.info-btn-wrap');
+  var wrap = btn.closest('.info-btn-wrap');
   if (!wrap) return;
-  const card = wrap.querySelector('.hover-card');
-  if (card) card.style.display = 'none';
+  var card = wrap.querySelector('.hover-card');
+  if (card) { card.style.display = 'none'; card.style.visibility = 'hidden'; }
 }
 
 // IMAGE FALLBACK — gradient on error

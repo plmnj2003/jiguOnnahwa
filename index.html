@@ -702,7 +702,7 @@ footer p{font-size:12px;color:rgba(245,245,247,0.3);line-height:1.8}
         <p>지구의 대기는 태양 복사 에너지는 잘 통과시키지만, 지구 복사 에너지는 대부분 흡수한다. 이때 대기는 흡수한 복사 에너지의 일부를 지표면으로 다시 방출하여 지표면의 온도를 높이고 보온하는 역할을 하는데, 이를 <strong style="color:#f5f5f7">온실 효과</strong>라고 한다.</p>
         <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:8px">
         <a href="https://ko.wikipedia.org/wiki/온실_효과" target="_blank" class="science-link">더 알아보기</a>
-        <span class="info-btn-wrap" style="position:relative;display:inline-block;margin-left:16px;vertical-align:middle">
+        <span class="info-btn-wrap" style="position:relative;display:inline-block;margin-left:12px;vertical-align:middle">
           <button class="info-btn"
             style="display:inline-flex;align-items:center;gap:5px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.15);color:rgba(245,245,247,0.7);font-size:13px;padding:6px 14px;border-radius:980px;cursor:pointer;transition:all 0.2s;font-family:inherit;"
             onmouseenter="this.style.background='rgba(255,255,255,0.12)';this.style.color='#f5f5f7';showCard(this)"
@@ -710,87 +710,38 @@ footer p{font-size:12px;color:rgba(245,245,247,0.3);line-height:1.8}
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
             한눈에 보기
           </button>
-          <!-- 호버 카드 팝업 -->
-          <div class="hover-card" style="
-            display:none;
-            position:fixed;
-            width:420px;max-width:90vw;
-            background:#1c1c1e;
-            border:1px solid rgba(255,255,255,0.12);
-            border-radius:16px;
-            box-shadow:0 20px 60px rgba(0,0,0,0.8);
-            z-index:99999;overflow:hidden;
-            pointer-events:none;
-            transition:opacity 0.15s ease;
-          ">
-            <!-- 화살표 -->
-            <div style="position:absolute;bottom:-7px;left:50%;transform:translateX(-50%);width:14px;height:7px;overflow:hidden">
-              <div style="width:14px;height:14px;background:#1c1c1e;border:1px solid rgba(255,255,255,0.12);transform:rotate(45deg);margin-top:-7px;margin-left:0"></div>
-            </div>
-            <!-- 헤더 -->
+          <div class="hover-card" style="display:none;position:fixed;width:420px;max-width:90vw;background:#1c1c1e;border:1px solid rgba(255,255,255,0.12);border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,0.8);z-index:99999;overflow:hidden;pointer-events:none;">
             <div style="background:#2c2c2e;padding:14px 18px;border-bottom:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;gap:8px">
               <span style="font-size:16px">🌍</span>
               <span style="font-size:14px;font-weight:600;color:#f5f5f7">온실 효과란?</span>
             </div>
-            <!-- 에너지 흐름 -->
+            <div style="padding:14px 18px;border-bottom:1px solid rgba(255,255,255,0.06)">
+              <p style="font-size:12px;color:rgba(245,245,247,0.7);line-height:1.7;margin:0">지구의 대기는 태양 복사 에너지는 잘 통과시키지만 지구 복사 에너지는 대부분 흡수한다. 이 에너지의 일부를 다시 지표로 되돌려 지표면의 온도를 높이고 보온하는 역할을 <strong style="color:#f5f5f7">온실 효과</strong>라 한다.</p>
+            </div>
             <div style="padding:14px 18px;border-bottom:1px solid rgba(255,255,255,0.06)">
               <p style="font-size:11px;color:rgba(245,245,247,0.4);margin:0 0 10px;letter-spacing:0.5px;text-transform:uppercase;font-weight:500">에너지 흐름</p>
-              <div style="display:flex;flex-direction:column;gap:6px">
-                <div style="display:flex;align-items:center;gap:10px">
-                  <div style="width:28px;height:28px;border-radius:50%;background:#FAEEDA;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px">☀️</div>
-                  <div style="font-size:12px;color:rgba(245,245,247,0.75);flex:1">태양 복사 에너지 → 대기 통과 → 약 50%만 지표 도달</div>
-                  <span style="font-size:10px;color:rgba(245,245,247,0.35);white-space:nowrap">단파</span>
-                </div>
-                <div style="margin-left:14px;border-left:1px dashed rgba(255,255,255,0.1);height:8px"></div>
-                <div style="display:flex;align-items:center;gap:10px">
-                  <div style="width:28px;height:28px;border-radius:50%;background:#1a3a5c;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px">🌐</div>
-                  <div style="font-size:12px;color:rgba(245,245,247,0.75);flex:1">지표에서 흡수 → 열에너지 · 적외선으로 재방출</div>
-                  <span style="font-size:10px;color:rgba(245,245,247,0.35);white-space:nowrap">장파</span>
-                </div>
-                <div style="margin-left:14px;border-left:1px dashed rgba(255,255,255,0.1);height:8px"></div>
-                <div style="display:flex;align-items:center;gap:10px">
-                  <div style="width:28px;height:28px;border-radius:50%;background:#1a3d2e;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px">☁️</div>
-                  <div style="font-size:12px;color:rgba(245,245,247,0.75);flex:1">온실 기체가 흡수 → 지표로 재방출 반복</div>
-                  <span style="font-size:10px;color:rgba(245,245,247,0.35);white-space:nowrap">온실 효과</span>
-                </div>
+              <div style="display:flex;align-items:center;justify-content:space-between;gap:4px">
+                <div style="text-align:center;flex:1"><div style="width:34px;height:34px;border-radius:50%;background:#FAEEDA;display:flex;align-items:center;justify-content:center;margin:0 auto 5px;font-size:15px">☀️</div><span style="font-size:10px;color:rgba(245,245,247,0.5);line-height:1.3">태양<br>복사</span></div>
+                <div style="color:rgba(255,255,255,0.2);font-size:12px">→</div>
+                <div style="text-align:center;flex:1"><div style="width:34px;height:34px;border-radius:50%;background:#1a3a5c;display:flex;align-items:center;justify-content:center;margin:0 auto 5px;font-size:15px">🌐</div><span style="font-size:10px;color:rgba(245,245,247,0.5);line-height:1.3">지표<br>흡수</span></div>
+                <div style="color:rgba(255,255,255,0.2);font-size:12px">→</div>
+                <div style="text-align:center;flex:1"><div style="width:34px;height:34px;border-radius:50%;background:#1a3d2e;display:flex;align-items:center;justify-content:center;margin:0 auto 5px;font-size:15px">☁️</div><span style="font-size:10px;color:rgba(245,245,247,0.5);line-height:1.3">기체<br>재흡수</span></div>
+                <div style="color:rgba(255,255,255,0.2);font-size:12px">→</div>
+                <div style="text-align:center;flex:1"><div style="width:34px;height:34px;border-radius:50%;background:#4d1a1a;display:flex;align-items:center;justify-content:center;margin:0 auto 5px;font-size:15px">🌡️</div><span style="font-size:10px;color:rgba(245,245,247,0.5);line-height:1.3">온도<br>상승</span></div>
               </div>
             </div>
-            <!-- 온실 기체 -->
             <div style="padding:14px 18px;border-bottom:1px solid rgba(255,255,255,0.06)">
               <p style="font-size:11px;color:rgba(245,245,247,0.4);margin:0 0 10px;letter-spacing:0.5px;text-transform:uppercase;font-weight:500">대표 온실 기체</p>
-              <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
-                <div style="background:rgba(255,255,255,0.04);border-radius:8px;padding:10px 12px">
-                  <div style="font-size:16px;margin-bottom:4px">💧</div>
-                  <div style="font-size:12px;font-weight:500;color:#f5f5f7">수증기 H₂O</div>
-                  <div style="font-size:11px;color:rgba(245,245,247,0.45);margin-top:2px">가장 풍부한 온실 기체</div>
-                </div>
-                <div style="background:rgba(255,255,255,0.04);border-radius:8px;padding:10px 12px">
-                  <div style="font-size:16px;margin-bottom:4px">🏭</div>
-                  <div style="font-size:12px;font-weight:500;color:#f5f5f7">이산화탄소 CO₂</div>
-                  <div style="font-size:11px;color:rgba(245,245,247,0.45);margin-top:2px">화석연료 연소</div>
-                </div>
-                <div style="background:rgba(255,255,255,0.04);border-radius:8px;padding:10px 12px">
-                  <div style="font-size:16px;margin-bottom:4px">🐄</div>
-                  <div style="font-size:12px;font-weight:500;color:#f5f5f7">메탄 CH₄</div>
-                  <div style="font-size:11px;color:rgba(245,245,247,0.45);margin-top:2px">CO₂보다 20배 강력</div>
-                </div>
-                <div style="background:rgba(255,255,255,0.04);border-radius:8px;padding:10px 12px">
-                  <div style="font-size:16px;margin-bottom:4px">🌾</div>
-                  <div style="font-size:12px;font-weight:500;color:#f5f5f7">아산화질소 N₂O</div>
-                  <div style="font-size:11px;color:rgba(245,245,247,0.45);margin-top:2px">비료 · 산업 활동</div>
-                </div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
+                <div style="background:rgba(255,255,255,0.04);border-radius:8px;padding:8px 10px;display:flex;gap:8px;align-items:center"><span style="font-size:15px">💧</span><div><div style="font-size:11px;font-weight:500;color:#f5f5f7">수증기 H₂O</div><div style="font-size:10px;color:rgba(245,245,247,0.4)">가장 풍부한 기체</div></div></div>
+                <div style="background:rgba(255,255,255,0.04);border-radius:8px;padding:8px 10px;display:flex;gap:8px;align-items:center"><span style="font-size:15px">🏭</span><div><div style="font-size:11px;font-weight:500;color:#f5f5f7">이산화탄소 CO₂</div><div style="font-size:10px;color:rgba(245,245,247,0.4)">화석연료 연소</div></div></div>
+                <div style="background:rgba(255,255,255,0.04);border-radius:8px;padding:8px 10px;display:flex;gap:8px;align-items:center"><span style="font-size:15px">🐄</span><div><div style="font-size:11px;font-weight:500;color:#f5f5f7">메탄 CH₄</div><div style="font-size:10px;color:rgba(245,245,247,0.4)">CO₂보다 20배 강력</div></div></div>
+                <div style="background:rgba(255,255,255,0.04);border-radius:8px;padding:8px 10px;display:flex;gap:8px;align-items:center"><span style="font-size:15px">🌾</span><div><div style="font-size:11px;font-weight:500;color:#f5f5f7">아산화질소 N₂O</div><div style="font-size:10px;color:rgba(245,245,247,0.4)">비료·산업 발생</div></div></div>
               </div>
             </div>
-            <!-- 핵심 포인트 -->
-            <div style="padding:14px 18px;display:grid;grid-template-columns:1fr 1fr;gap:8px">
-              <div style="background:rgba(0,113,227,0.12);border:1px solid rgba(0,113,227,0.2);border-radius:8px;padding:10px 12px">
-                <div style="font-size:11px;font-weight:600;color:#60b3ff;margin-bottom:4px">✓ 온실 효과는 필수</div>
-                <div style="font-size:11px;color:rgba(96,179,255,0.75);line-height:1.5">없으면 지구 −18°C</div>
-              </div>
-              <div style="background:rgba(220,50,50,0.1);border:1px solid rgba(220,50,50,0.2);border-radius:8px;padding:10px 12px">
-                <div style="font-size:11px;font-weight:600;color:#ff6060;margin-bottom:4px">⚠ 과도하면 문제</div>
-                <div style="font-size:11px;color:rgba(255,96,96,0.75);line-height:1.5">CO₂ 31% 증가 → 온난화</div>
-              </div>
+            <div style="padding:12px 18px;display:grid;grid-template-columns:1fr 1fr;gap:6px">
+              <div style="background:rgba(0,113,227,0.12);border:1px solid rgba(0,113,227,0.2);border-radius:8px;padding:10px;text-align:center"><div style="font-size:13px;font-weight:600;color:#60b3ff">✓ 온실 효과 필수</div><div style="font-size:10px;color:rgba(96,179,255,0.7);margin-top:3px">없으면 지구 −18°C</div></div>
+              <div style="background:rgba(220,50,50,0.1);border:1px solid rgba(220,50,50,0.2);border-radius:8px;padding:10px;text-align:center"><div style="font-size:13px;font-weight:600;color:#ff6060">⚠ 과도하면 문제</div><div style="font-size:10px;color:rgba(255,96,96,0.7);margin-top:3px">CO₂ 31% 증가 → 온난화</div></div>
             </div>
           </div>
         </span>
@@ -901,7 +852,56 @@ footer p{font-size:12px;color:rgba(245,245,247,0.3);line-height:1.8}
         <span class="science-badge">개념 03</span>
         <h3>지구온난화</h3>
         <p>인류의 산업 활동으로 인해 대기 중으로 배출되는 온실 기체의 양이 점점 많아지고 있다. 온실 기체가 증가하면 온실 효과가 증가하여 지구의 평균 기온이 상승하게 된다. 이를 <strong style="color:#f5f5f7">지구 온난화</strong>라고 한다.</p>
+        <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:8px">
         <a href="https://ko.wikipedia.org/wiki/지구_온난화" target="_blank" class="science-link">더 알아보기</a>
+        <span class="info-btn-wrap" style="position:relative;display:inline-block;vertical-align:middle">
+          <button class="info-btn"
+            style="display:inline-flex;align-items:center;gap:5px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.15);color:rgba(245,245,247,0.7);font-size:13px;padding:6px 14px;border-radius:980px;cursor:pointer;transition:all 0.2s;font-family:inherit;"
+            onmouseenter="this.style.background='rgba(255,255,255,0.12)';this.style.color='#f5f5f7';showCard(this)"
+            onmouseleave="this.style.background='rgba(255,255,255,0.06)';this.style.color='rgba(245,245,247,0.7)';hideCard(this)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            한눈에 보기
+          </button>
+          <div class="hover-card" style="display:none;position:fixed;width:420px;max-width:90vw;background:#1c1c1e;border:1px solid rgba(255,255,255,0.12);border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,0.8);z-index:99999;overflow:hidden;pointer-events:none;">
+            <div style="background:#2c2c2e;padding:14px 18px;border-bottom:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;gap:8px">
+              <span style="font-size:16px">🌡️</span>
+              <span style="font-size:14px;font-weight:600;color:#f5f5f7">지구온난화 & 기후변화</span>
+            </div>
+            <div style="padding:14px 18px;border-bottom:1px solid rgba(255,255,255,0.06)">
+              <p style="font-size:12px;color:rgba(245,245,247,0.7);line-height:1.7;margin:0 0 8px"><strong style="color:#f5f5f7">지구온난화</strong> — 온실 효과의 증가로 지구의 평균 기온이 점점 상승하는 현상.</p>
+              <p style="font-size:12px;color:rgba(245,245,247,0.7);line-height:1.7;margin:0"><strong style="color:#f5f5f7">기후변화</strong> — 온난화로 전지구적 기후 패턴이 급격히 변화하는 현상. 인간의 화석연료 사용이 주원인.</p>
+            </div>
+            <div style="padding:14px 18px;border-bottom:1px solid rgba(255,255,255,0.06)">
+              <p style="font-size:11px;color:rgba(245,245,247,0.4);margin:0 0 10px;letter-spacing:0.5px;text-transform:uppercase;font-weight:500">발생 원인</p>
+              <div style="display:flex;align-items:center;justify-content:space-between;gap:4px">
+                <div style="text-align:center;flex:1"><div style="width:34px;height:34px;border-radius:50%;background:#2a2a1a;display:flex;align-items:center;justify-content:center;margin:0 auto 5px;font-size:15px">🏭</div><span style="font-size:10px;color:rgba(245,245,247,0.5);line-height:1.3">화석연료<br>연소</span></div>
+                <div style="color:rgba(255,255,255,0.2);font-size:12px">→</div>
+                <div style="text-align:center;flex:1"><div style="width:34px;height:34px;border-radius:50%;background:#1a3d2e;display:flex;align-items:center;justify-content:center;margin:0 auto 5px;font-size:15px">💨</div><span style="font-size:10px;color:rgba(245,245,247,0.5);line-height:1.3">온실기체<br>증가</span></div>
+                <div style="color:rgba(255,255,255,0.2);font-size:12px">→</div>
+                <div style="text-align:center;flex:1"><div style="width:34px;height:34px;border-radius:50%;background:#4d1a1a;display:flex;align-items:center;justify-content:center;margin:0 auto 5px;font-size:15px">🌡️</div><span style="font-size:10px;color:rgba(245,245,247,0.5);line-height:1.3">지구<br>온난화</span></div>
+                <div style="color:rgba(255,255,255,0.2);font-size:12px">→</div>
+                <div style="text-align:center;flex:1"><div style="width:34px;height:34px;border-radius:50%;background:#3d1a00;display:flex;align-items:center;justify-content:center;margin:0 auto 5px;font-size:15px">⚠️</div><span style="font-size:10px;color:rgba(245,245,247,0.5);line-height:1.3">기후<br>변화</span></div>
+              </div>
+            </div>
+            <div style="padding:14px 18px;border-bottom:1px solid rgba(255,255,255,0.06)">
+              <p style="font-size:11px;color:rgba(245,245,247,0.4);margin:0 0 10px;letter-spacing:0.5px;text-transform:uppercase;font-weight:500">주요 영향</p>
+              <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px">
+                <div style="background:rgba(255,255,255,0.04);border-radius:8px;padding:8px;text-align:center"><div style="font-size:16px;margin-bottom:4px">🌊</div><div style="font-size:10px;color:rgba(245,245,247,0.6)">해수면 상승</div></div>
+                <div style="background:rgba(255,255,255,0.04);border-radius:8px;padding:8px;text-align:center"><div style="font-size:16px;margin-bottom:4px">🔥</div><div style="font-size:10px;color:rgba(245,245,247,0.6)">폭염·산불</div></div>
+                <div style="background:rgba(255,255,255,0.04);border-radius:8px;padding:8px;text-align:center"><div style="font-size:16px;margin-bottom:4px">🌪️</div><div style="font-size:10px;color:rgba(245,245,247,0.6)">극단적 기상</div></div>
+                <div style="background:rgba(255,255,255,0.04);border-radius:8px;padding:8px;text-align:center"><div style="font-size:16px;margin-bottom:4px">🐾</div><div style="font-size:10px;color:rgba(245,245,247,0.6)">생태계 붕괴</div></div>
+                <div style="background:rgba(255,255,255,0.04);border-radius:8px;padding:8px;text-align:center"><div style="font-size:16px;margin-bottom:4px">🌾</div><div style="font-size:10px;color:rgba(245,245,247,0.6)">식량·물 부족</div></div>
+                <div style="background:rgba(255,255,255,0.04);border-radius:8px;padding:8px;text-align:center"><div style="font-size:16px;margin-bottom:4px">🏥</div><div style="font-size:10px;color:rgba(245,245,247,0.6)">보건 위협</div></div>
+              </div>
+            </div>
+            <div style="padding:12px 18px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px">
+              <div style="background:rgba(220,50,50,0.1);border:1px solid rgba(220,50,50,0.2);border-radius:8px;padding:8px;text-align:center"><div style="font-size:13px;font-weight:600;color:#ff6060">+1.2°C</div><div style="font-size:10px;color:rgba(255,96,96,0.7);margin-top:2px">현재 상승</div></div>
+              <div style="background:rgba(255,160,0,0.1);border:1px solid rgba(255,160,0,0.2);border-radius:8px;padding:8px;text-align:center"><div style="font-size:13px;font-weight:600;color:#ffa000">1.5°C</div><div style="font-size:10px;color:rgba(255,160,0,0.7);margin-top:2px">IPCC 마지노선</div></div>
+              <div style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:8px;text-align:center"><div style="font-size:13px;font-weight:600;color:#f5f5f7">×2</div><div style="font-size:10px;color:rgba(245,245,247,0.5);margin-top:2px">육지 상승속도</div></div>
+            </div>
+          </div>
+        </span>
+        </div>
       </div>
     </div>
   </div>

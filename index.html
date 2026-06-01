@@ -624,20 +624,75 @@ footer p{font-size:12px;color:rgba(245,245,247,0.3);line-height:1.8}
     <p class="fade-up" style="font-size:16px;color:rgba(245,245,247,0.5);font-weight:300">영상을 통해 폭염과 열대야의 심각성을 확인해 봅시다.</p>
   </div>
   <div style="max-width:900px;margin:0 auto">
-    <div style="
-      position:relative;border-radius:18px;overflow:hidden;
+    <!-- 썸네일 클릭 → 모달 -->
+    <div onclick="openVideo()" style="
+      position:relative;cursor:pointer;border-radius:18px;overflow:hidden;
       box-shadow:0 30px 80px rgba(0,0,0,0.7);
-      aspect-ratio:16/9;background:#000;
-    ">
-      <iframe
-        src="https://www.youtube.com/embed/uKqxlJt7VZo?rel=0&modestbranding=1&color=white&fs=0"
-        title="푹푹 찌는 열대야 — 폭염의 실태"
-        style="position:absolute;inset:0;width:100%;height:100%;border:none;"
-        allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
-      </iframe>
+      aspect-ratio:16/9;background:#111;
+      transition:transform 0.3s ease;
+    " onmouseenter="this.style.transform='scale(1.01)'" onmouseleave="this.style.transform='scale(1)'">
+      <!-- YouTube 썸네일 직접 사용 -->
+      <img src="https://img.youtube.com/vi/uKqxlJt7VZo/maxresdefault.jpg"
+        onerror="this.src='https://img.youtube.com/vi/uKqxlJt7VZo/hqdefault.jpg'"
+        alt="열대야 영상"
+        style="width:100%;height:100%;object-fit:cover;display:block;">
+      <!-- 어두운 오버레이 -->
+      <div style="position:absolute;inset:0;background:rgba(0,0,0,0.35)"></div>
+      <!-- 재생 버튼 -->
+      <div style="
+        position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+        width:72px;height:72px;border-radius:50%;
+        background:rgba(255,255,255,0.18);
+        backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+        border:2px solid rgba(255,255,255,0.4);
+        display:flex;align-items:center;justify-content:center;
+        transition:all 0.3s;
+      ">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="white" style="margin-left:3px">
+          <path d="M8 5v14l11-7z"/>
+        </svg>
+      </div>
+      <!-- 하단 라벨 -->
+      <div style="position:absolute;bottom:20px;left:24px">
+        <div style="font-size:11px;color:rgba(255,255,255,0.6);letter-spacing:2px;text-transform:uppercase;margin-bottom:4px">탐구 영상</div>
+        <div style="font-size:17px;font-weight:500;color:#fff">푹푹 찌는 열대야 — 폭염의 실태</div>
+      </div>
     </div>
   </div>
 </section>
+
+<!-- 영상 모달 -->
+<div id="videoModal" style="
+  display:none;
+  position:fixed;inset:0;z-index:9999;
+  background:rgba(0,0,0,0.88);
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  align-items:center;justify-content:center;
+" onclick="closeVideo(event)">
+  <!-- X 버튼 -->
+  <button onclick="closeVideo(event)" style="
+    position:absolute;top:20px;right:24px;
+    background:rgba(255,255,255,0.12);border:1.5px solid rgba(255,255,255,0.25);
+    color:#fff;width:40px;height:40px;border-radius:50%;
+    font-size:20px;cursor:pointer;
+    display:flex;align-items:center;justify-content:center;
+    transition:background 0.2s;z-index:10000;
+  " onmouseenter="this.style.background='rgba(255,255,255,0.25)'"
+    onmouseleave="this.style.background='rgba(255,255,255,0.12)'">✕</button>
+  <!-- iframe 컨테이너 — 클릭해도 닫히지 않음 -->
+  <div onclick="event.stopPropagation()" style="
+    width:min(90vw,960px);
+    border-radius:14px;overflow:hidden;
+    box-shadow:0 40px 120px rgba(0,0,0,0.8);
+  ">
+    <iframe id="videoIframe"
+      src=""
+      style="width:100%;aspect-ratio:16/9;display:block;border:none;"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen>
+    </iframe>
+  </div>
+</div>
 
 <!-- NASA TEMP VISUALIZATION -->
 <section style="background:#000;padding:80px 24px">
@@ -1190,6 +1245,26 @@ const counterObserver = new IntersectionObserver((entries) => {
 ['counter1','counter2'].forEach(id => {
   const el = document.getElementById(id);
   if (el) counterObserver.observe(el);
+});
+
+// 영상 모달
+function openVideo() {
+  const modal = document.getElementById('videoModal');
+  const iframe = document.getElementById('videoIframe');
+  iframe.src = 'https://www.youtube.com/embed/uKqxlJt7VZo?autoplay=1&rel=0&modestbranding=1';
+  modal.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+}
+function closeVideo(e) {
+  // iframe 내부 클릭은 무시 (stopPropagation으로 처리됨)
+  const modal = document.getElementById('videoModal');
+  const iframe = document.getElementById('videoIframe');
+  modal.style.display = 'none';
+  iframe.src = '';
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeVideo(e);
 });
 
 // IMAGE FALLBACK — gradient on error

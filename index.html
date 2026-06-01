@@ -810,7 +810,7 @@ footer p{font-size:12px;color:rgba(245,245,247,0.3);line-height:1.8}
         <p>지구 복사 에너지를 흡수하고 다시 방출하여 온실효과를 일으키는 기체를 <strong style="color:#f5f5f7">온실 기체</strong>라 한다. 대표적으로 이산화탄소(CO₂), 수증기(H₂O), 메탄(CH₄), 아산화질소(N₂O) 등이 있다.</p>
         <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:8px">
         <a href="https://ko.wikipedia.org/wiki/온실_기체" target="_blank" class="science-link">더 알아보기</a>
-        <span class="info-btn-wrap" style="position:relative;display:inline-block;margin-left:16px;vertical-align:middle">
+        <span class="info-btn-wrap" style="position:relative;display:inline-block;margin-left:12px;vertical-align:middle">
           <button class="info-btn"
             style="display:inline-flex;align-items:center;gap:5px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.15);color:rgba(245,245,247,0.7);font-size:13px;padding:6px 14px;border-radius:980px;cursor:pointer;transition:all 0.2s;font-family:inherit;"
             onmouseenter="this.style.background='rgba(255,255,255,0.12)';this.style.color='#f5f5f7';showCard(this)"
@@ -818,61 +818,71 @@ footer p{font-size:12px;color:rgba(245,245,247,0.3);line-height:1.8}
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
             한눈에 보기
           </button>
-          <div class="hover-card" style="display:none;position:fixed;width:420px;max-width:90vw;background:#1c1c1e;border:1px solid rgba(255,255,255,0.12);border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,0.8);z-index:99999;overflow:hidden;pointer-events:none;transition:opacity 0.15s ease;">
-            <!-- 헤더 -->
+          <div class="hover-card" style="display:none;position:fixed;width:420px;max-width:90vw;background:#1c1c1e;border:1px solid rgba(255,255,255,0.12);border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,0.8);z-index:99999;overflow:hidden;pointer-events:none;">
             <div style="background:#2c2c2e;padding:14px 18px;border-bottom:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;gap:8px">
               <span style="font-size:16px">💨</span>
               <span style="font-size:14px;font-weight:600;color:#f5f5f7">온실 기체란?</span>
             </div>
-            <!-- 정의 -->
             <div style="padding:14px 18px;border-bottom:1px solid rgba(255,255,255,0.06)">
-              <p style="font-size:12px;color:rgba(245,245,247,0.7);line-height:1.7;margin:0">
-                지구 지표면에서 우주로 발산하는 적외선 복사열을 흡수·반사하여 지구 표면 온도를 상승시키는 기체. 두 가지 이상의 서로 다른 원자가 결합된 기체가 해당된다.
-              </p>
+              <p style="font-size:12px;color:rgba(245,245,247,0.7);line-height:1.7;margin:0">지구 지표면에서 우주로 발산하는 적외선 복사열을 <strong style="color:#f5f5f7">흡수·반사</strong>하여 지구 표면 온도를 상승시키는 기체.</p>
             </div>
-            <!-- 주요 기체 -->
+            <div style="padding:14px 18px;border-bottom:1px solid rgba(255,255,255,0.06)">
+              <p style="font-size:11px;color:rgba(245,245,247,0.4);margin:0 0 10px;letter-spacing:0.5px;text-transform:uppercase;font-weight:500">작동 원리</p>
+              <div style="display:flex;align-items:center;justify-content:space-between;gap:4px">
+                <div style="text-align:center;flex:1">
+                  <div style="width:36px;height:36px;border-radius:50%;background:#FAEEDA;display:flex;align-items:center;justify-content:center;margin:0 auto 6px;font-size:16px">☀️</div>
+                  <span style="font-size:10px;color:rgba(245,245,247,0.5);line-height:1.3">태양<br>복사</span>
+                </div>
+                <div style="color:rgba(245,245,247,0.2);font-size:12px">→</div>
+                <div style="text-align:center;flex:1">
+                  <div style="width:36px;height:36px;border-radius:50%;background:#1a3a5c;display:flex;align-items:center;justify-content:center;margin:0 auto 6px;font-size:16px">🌐</div>
+                  <span style="font-size:10px;color:rgba(245,245,247,0.5);line-height:1.3">지표<br>흡수</span>
+                </div>
+                <div style="color:rgba(245,245,247,0.2);font-size:12px">→</div>
+                <div style="text-align:center;flex:1">
+                  <div style="width:36px;height:36px;border-radius:50%;background:#1a3d2e;display:flex;align-items:center;justify-content:center;margin:0 auto 6px;font-size:16px">☁️</div>
+                  <span style="font-size:10px;color:rgba(245,245,247,0.5);line-height:1.3">기체<br>재흡수</span>
+                </div>
+                <div style="color:rgba(245,245,247,0.2);font-size:12px">→</div>
+                <div style="text-align:center;flex:1">
+                  <div style="width:36px;height:36px;border-radius:50%;background:#4d1a1a;display:flex;align-items:center;justify-content:center;margin:0 auto 6px;font-size:16px">🌡️</div>
+                  <span style="font-size:10px;color:rgba(245,245,247,0.5);line-height:1.3">온도<br>상승</span>
+                </div>
+              </div>
+            </div>
             <div style="padding:14px 18px;border-bottom:1px solid rgba(255,255,255,0.06)">
               <p style="font-size:11px;color:rgba(245,245,247,0.4);margin:0 0 10px;letter-spacing:0.5px;text-transform:uppercase;font-weight:500">주요 온실 기체</p>
-              <div style="display:flex;flex-direction:column;gap:8px">
-                <div style="display:flex;align-items:center;gap:10px;background:rgba(255,255,255,0.04);border-radius:8px;padding:10px 12px">
-                  <span style="font-size:18px">💧</span>
-                  <div style="flex:1">
-                    <div style="font-size:12px;font-weight:500;color:#f5f5f7">수증기 H₂O</div>
-                    <div style="font-size:11px;color:rgba(245,245,247,0.45);margin-top:2px">자연적 온실 효과의 주요 원인. 인위적 제어 불가</div>
-                  </div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
+                <div style="background:rgba(255,255,255,0.04);border-radius:8px;padding:8px 10px;display:flex;gap:8px;align-items:center">
+                  <span style="font-size:16px">💧</span>
+                  <div><div style="font-size:11px;font-weight:500;color:#f5f5f7">수증기 H₂O</div><div style="font-size:10px;color:rgba(245,245,247,0.4);margin-top:1px">자연적 주원인</div></div>
                 </div>
-                <div style="display:flex;align-items:center;gap:10px;background:rgba(255,255,255,0.04);border-radius:8px;padding:10px 12px">
-                  <span style="font-size:18px">🏭</span>
-                  <div style="flex:1">
-                    <div style="font-size:12px;font-weight:500;color:#f5f5f7">이산화탄소 CO₂</div>
-                    <div style="font-size:11px;color:rgba(245,245,247,0.45);margin-top:2px">1970~2004년 80% 증가. 화석연료 연소가 주원인</div>
-                  </div>
+                <div style="background:rgba(255,255,255,0.04);border-radius:8px;padding:8px 10px;display:flex;gap:8px;align-items:center">
+                  <span style="font-size:16px">🏭</span>
+                  <div><div style="font-size:11px;font-weight:500;color:#f5f5f7">CO₂</div><div style="font-size:10px;color:rgba(245,245,247,0.4);margin-top:1px">80% 증가 (70~04)</div></div>
                 </div>
-                <div style="display:flex;align-items:center;gap:10px;background:rgba(255,255,255,0.04);border-radius:8px;padding:10px 12px">
-                  <span style="font-size:18px">🐄</span>
-                  <div style="flex:1">
-                    <div style="font-size:12px;font-weight:500;color:#f5f5f7">메탄 CH₄</div>
-                    <div style="font-size:11px;color:rgba(245,245,247,0.45);margin-top:2px">연간 2억 5천만 톤 배출. CO₂보다 20배 강력</div>
-                  </div>
+                <div style="background:rgba(255,255,255,0.04);border-radius:8px;padding:8px 10px;display:flex;gap:8px;align-items:center">
+                  <span style="font-size:16px">🐄</span>
+                  <div><div style="font-size:11px;font-weight:500;color:#f5f5f7">메탄 CH₄</div><div style="font-size:10px;color:rgba(245,245,247,0.4);margin-top:1px">CO₂보다 20배 강력</div></div>
                 </div>
-                <div style="display:flex;align-items:center;gap:10px;background:rgba(255,255,255,0.04);border-radius:8px;padding:10px 12px">
-                  <span style="font-size:18px">🌾</span>
-                  <div style="flex:1">
-                    <div style="font-size:12px;font-weight:500;color:#f5f5f7">아산화질소 N₂O · 오존 O₃ · CFCs</div>
-                    <div style="font-size:11px;color:rgba(245,245,247,0.45);margin-top:2px">비료·산업활동·냉매 등에서 발생</div>
-                  </div>
+                <div style="background:rgba(255,255,255,0.04);border-radius:8px;padding:8px 10px;display:flex;gap:8px;align-items:center">
+                  <span style="font-size:16px">🌾</span>
+                  <div><div style="font-size:11px;font-weight:500;color:#f5f5f7">N₂O · O₃</div><div style="font-size:10px;color:rgba(245,245,247,0.4);margin-top:1px">비료·산업 발생</div></div>
                 </div>
               </div>
             </div>
-            <!-- 핵심 수치 + 포인트 -->
-            <div style="padding:14px 18px;display:grid;grid-template-columns:1fr 1fr;gap:8px">
-              <div style="background:rgba(0,113,227,0.12);border:1px solid rgba(0,113,227,0.2);border-radius:8px;padding:10px 12px">
-                <div style="font-size:11px;font-weight:600;color:#60b3ff;margin-bottom:4px">🌡 없으면 −18°C</div>
-                <div style="font-size:11px;color:rgba(96,179,255,0.75);line-height:1.5">현재 평균 +15°C 유지에 필수</div>
+            <div style="padding:12px 18px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px">
+              <div style="background:rgba(0,113,227,0.12);border:1px solid rgba(0,113,227,0.2);border-radius:8px;padding:8px;text-align:center">
+                <div style="font-size:14px;font-weight:600;color:#60b3ff">+15°C</div>
+                <div style="font-size:10px;color:rgba(96,179,255,0.7);margin-top:2px">현재 평균</div>
               </div>
-              <div style="background:rgba(220,50,50,0.1);border:1px solid rgba(220,50,50,0.2);border-radius:8px;padding:10px 12px">
-                <div style="font-size:11px;font-weight:600;color:#ff6060;margin-bottom:4px">⚠ 70% 증가</div>
-                <div style="font-size:11px;color:rgba(255,96,96,0.75);line-height:1.5">1970~2004년 인위적 배출량</div>
+              <div style="background:rgba(220,50,50,0.1);border:1px solid rgba(220,50,50,0.2);border-radius:8px;padding:8px;text-align:center">
+                <div style="font-size:14px;font-weight:600;color:#ff6060">−18°C</div>
+                <div style="font-size:10px;color:rgba(255,96,96,0.7);margin-top:2px">기체 없을시</div>
+              </div>
+              <div style="background:rgba(255,160,0,0.1);border:1px solid rgba(255,160,0,0.2);border-radius:8px;padding:8px;text-align:center">
+                <div style="font-size:14px;font-weight:600;color:#ffa000">+70%</div>
+                <div style="font-size:10px;color:rgba(255,160,0,0.7);margin-top:2px">배출 증가</div>
               </div>
             </div>
           </div>

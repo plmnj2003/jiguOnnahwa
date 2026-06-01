@@ -202,7 +202,7 @@ section{padding:120px 24px}
 }
 .science-item-content h3{
   font-size:clamp(26px,3.5vw,40px);font-weight:700;
-  letter-spacing:-1px;color:#f5f5f7;margin-bottom:16px;line-height:1.15;
+  letter-spacing:-1px;color:#f5f5f7;margin-bottom:16px;line-height:1.2;
 }
 .science-item-content p{
   font-size:16px;color:rgba(245,245,247,0.6);
@@ -274,13 +274,18 @@ section{padding:120px 24px}
   color:#f5f5f7;line-height:1.5;letter-spacing:-0.5px;
 }
 .decision-options{
-  display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;
+  display:grid;grid-template-columns:repeat(2,1fr);gap:12px;
+  transition:all 0.5s ease;
+}
+.decision-options.has-selection{
+  grid-template-columns:1fr;
 }
 .decision-opt{
   background:#1c1c1e;
   border:1px solid rgba(255,255,255,0.08);
   border-radius:14px;padding:28px 24px;
-  cursor:pointer;transition:all 0.3s;
+  cursor:pointer;
+  transition:all 0.5s cubic-bezier(0.25,0.46,0.45,0.94);
   opacity:0;transform:scale(0.95);
 }
 .decision-opt.visible{opacity:1;transform:scale(1)}
@@ -290,9 +295,34 @@ section{padding:120px 24px}
   transform:scale(1.02);
 }
 .decision-opt.selected{
-  background:rgba(0,113,227,0.15);
-  border-color:var(--blue);
+  background:linear-gradient(135deg,rgba(0,113,227,0.25),rgba(0,113,227,0.1));
+  border:2px solid var(--blue);
+  transform:scale(1.04) !important;
+  box-shadow:0 0 40px rgba(0,113,227,0.3), 0 20px 60px rgba(0,0,0,0.5);
+  grid-column:1/-1;
+  padding:40px 36px;
 }
+.decision-opt.dismissed{
+  opacity:0 !important;
+  transform:scale(0.85) !important;
+  pointer-events:none;
+  max-height:0;
+  padding:0 !important;
+  margin:0 !important;
+  border:none !important;
+  overflow:hidden;
+}
+.decision-opt.selected .opt-emoji{font-size:48px;margin-bottom:16px}
+.decision-opt.selected .opt-title{font-size:22px;font-weight:700;color:#fff;margin-bottom:10px}
+.decision-opt.selected .opt-desc{font-size:15px;color:rgba(245,245,247,0.75);line-height:1.7}
+.decision-opt.selected .selected-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  background:var(--blue);color:#fff;
+  font-size:12px;font-weight:500;letter-spacing:0.5px;
+  padding:5px 14px;border-radius:980px;
+  margin-bottom:16px;
+}
+.selected-badge{display:none}
 .opt-emoji{font-size:28px;margin-bottom:12px;display:block}
 .opt-title{font-size:15px;font-weight:500;color:#f5f5f7;margin-bottom:6px}
 .opt-desc{font-size:13px;color:rgba(245,245,247,0.5);line-height:1.5}
@@ -329,12 +359,14 @@ section{padding:120px 24px}
 .final-title{
   font-size:clamp(36px,6vw,72px);font-weight:700;
   letter-spacing:-2px;color:#f5f5f7;
-  margin-bottom:20px;line-height:1.05;
+  margin-bottom:20px;line-height:1.1;
 }
 .final-title em{font-style:normal;color:var(--blue)}
 .final-sub{
   font-size:19px;color:rgba(245,245,247,0.5);
-  margin-bottom:56px;font-weight:300;max-width:560px;margin-left:auto;margin-right:auto;
+  margin-bottom:56px;font-weight:300;max-width:560px;
+  margin-left:auto;margin-right:auto;
+  text-align:center;
 }
 .final-btns{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
 .btn-primary{
@@ -415,9 +447,10 @@ footer p{font-size:12px;color:rgba(245,245,247,0.3);line-height:1.8}
   <div class="hero-bg"></div>
   <div class="hero-glow"></div>
   <img class="hero-earth"
-    src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/The_Earth_seen_from_Apollo_17.jpg/1024px-The_Earth_seen_from_Apollo_17.jpg"
+    src="https://images.unsplash.com/photo-1614730321146-b6fa6a46bcb4?w=900&q=80"
     alt=""
-    onerror="this.style.display='none'">
+    onerror="this.style.display='none'"
+    crossorigin="anonymous">
   <div class="hero-content">
     <div class="hero-tag">과학 탐구 수업 자료</div>
     <h1 class="hero-title">에어컨 사용과<br>지구온난화</h1>
@@ -441,7 +474,7 @@ footer p{font-size:12px;color:rgba(245,245,247,0.3);line-height:1.8}
         <div class="stat-icon">🌡️</div>
         <div class="stat-number">+1.2<span>°C</span></div>
         <div class="stat-card-title">지구 평균 온도 상승</div>
-        <div class="stat-card-desc">1880년 이후 지구 평균 기온은 꾸준히 상승하고 있다. 특히 최근 10년간 가속화되는 추세.</div>
+        <div class="stat-card-desc">1880년 이후 지구 평균기온은 꾸준히 상승하고 있다. 특히 최근 10년간 가속화되는 추세.</div>
         <br>
         <a href="https://assets.science.nasa.gov/content/dam/science/esd/eo/woc/images/globaltemp/annualtempanom_gis_2025.gif?w=3360&h=1500&fit=clip&crop=faces%2Cfocalpoint" target="_blank" style="color:var(--blue);font-size:13px;text-decoration:none">NASA 데이터 보기 →</a>
       </div>
@@ -470,7 +503,7 @@ footer p{font-size:12px;color:rgba(245,245,247,0.3);line-height:1.8}
 <section class="science-section" id="science">
   <div class="section-inner">
     <div class="science-header">
-      <h2 class="fade-up">지구는 왜 점점<br>뜨거워질까?</h2>
+      <h2 class="fade-up" style="line-height:1.15">지구는 왜 점점<br>뜨거워질까?</h2>
       <p class="fade-up">과학 개념 탐구 — 온실 효과, 온실 기체, 지구온난화</p>
     </div>
 
@@ -497,7 +530,7 @@ footer p{font-size:12px;color:rgba(245,245,247,0.3);line-height:1.8}
       <div class="science-item-content">
         <span class="science-badge">개념 02</span>
         <h3>온실 기체</h3>
-        <p>지구 복사 에너지를 흡수하고 다시 방출하여 온실 효과를 일으키는 기체를 <strong style="color:#f5f5f7">온실 기체</strong>라 한다. 대표적으로 이산화탄소(CO₂), 수증기(H₂O), 메탄(CH₄), 아산화질소(N₂O) 등이 있다.</p>
+        <p>지구 복사 에너지를 흡수하고 다시 방출하여 온실효과를 일으키는 기체를 <strong style="color:#f5f5f7">온실 기체</strong>라 한다. 대표적으로 이산화탄소(CO₂), 수증기(H₂O), 메탄(CH₄), 아산화질소(N₂O) 등이 있다.</p>
         <a href="https://ko.wikipedia.org/wiki/온실_기체" target="_blank" class="science-link">더 알아보기</a>
       </div>
     </div>
@@ -536,9 +569,9 @@ footer p{font-size:12px;color:rgba(245,245,247,0.3);line-height:1.8}
       transition:transform 0.4s cubic-bezier(0.25,0.46,0.45,0.94);
       aspect-ratio:16/9;background:#111;
     " onmouseenter="this.style.transform='scale(1.02)'" onmouseleave="this.style.transform='scale(1)'">
-      <img src="https://img.youtube.com/vi/uKqxlJt7VZo/maxresdefault.jpg"
-        onerror="this.src='https://img.youtube.com/vi/uKqxlJt7VZo/hqdefault.jpg'"
+      <img src="https://images.unsplash.com/photo-1567416661576-659f9c2eac01?w=1200&q=80"
         alt="열대야 영상 썸네일"
+        data-grad="linear-gradient(135deg,#0a0a1a,#1a1a3d)" data-label="🎬"
         style="width:100%;height:100%;object-fit:cover;display:block;opacity:0.8">
       <!-- dark gradient overlay -->
       <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0.1) 0%,rgba(0,0,0,0.5) 100%)"></div>
@@ -599,16 +632,16 @@ footer p{font-size:12px;color:rgba(245,245,247,0.3);line-height:1.8}
   <div style="max-width:900px;margin:0 auto">
     <div style="text-align:center;margin-bottom:48px">
       <div class="stat-label fade-up">NASA 데이터</div>
-      <h2 class="fade-up" style="font-size:clamp(28px,4vw,44px);font-weight:700;letter-spacing:-1px;color:#f5f5f7;margin-bottom:12px">
-        1880년 이후 지구 평균 기온 변화
-      </h2>
+      <h2 class="fade-up" style="font-size:clamp(28px,4vw,44px);font-weight:700;letter-spacing:-1px;color:#f5f5f7;margin-bottom:12px">1880년 이후<br>지구 평균 기온 변화</h2>
     </div>
-    <div class="reveal-img-wrap active" style="max-width:860px;margin:0 auto">
-      <img src="https://assets.science.nasa.gov/content/dam/science/esd/eo/woc/images/globaltemp/annualtempanom_gis_2025.gif"
-        alt="NASA 지구 평균 기온 변화" style="width:100%;border-radius:14px;display:block">
+    <div class="reveal-img-wrap active" data-img-wrap style="max-width:860px;margin:0 auto;min-height:200px;position:relative;">
+      <img src="https://images.unsplash.com/photo-1508193638397-1c4234db14d8?w=1200&q=80"
+        alt="NASA 지구 평균 기온 변화"
+        data-grad="linear-gradient(135deg,#1a0000,#4d0a00)" data-label="🌡️"
+        style="width:100%;border-radius:14px;display:block">
       <div style="padding:16px 4px 0;text-align:left;">
-        <p style="font-size:13px;font-weight:500;color:rgba(245,245,247,0.8);margin-bottom:4px">연간 기온 이상 데이터 (NASA GISS)</p>
-        <p style="font-size:12px;color:rgba(245,245,247,0.45);">붉은색이 강해질수록 평균 기온이 높아지는 것을 의미합니다.</p>
+        <p style="font-size:13px;font-weight:500;color:rgba(245,245,247,0.8);margin-bottom:4px">지구온난화 — 기온 상승의 현실</p>
+        <p style="font-size:12px;color:rgba(245,245,247,0.45);">산업화 이후 지구 평균 기온은 지속적으로 상승하고 있습니다. (Source: NASA GISS)</p>
       </div>
     </div>
   </div>
@@ -617,14 +650,127 @@ footer p{font-size:12px;color:rgba(245,245,247,0.3);line-height:1.8}
 
 <!-- VISUAL GALLERY SECTION -->
 <section style="background:#000;padding:120px 24px 80px">
+  <div style="max-width:1100px;margin:0 auto">
+    <div style="text-align:center;margin-bottom:64px">
+      <div style="font-size:17px;color:#0071e3;margin-bottom:14px">지구온난화의 현실</div>
+      <h2 style="font-size:clamp(32px,5vw,52px);font-weight:700;letter-spacing:-1.5px;color:#f5f5f7;margin-bottom:14px;line-height:1.15">우리가 잊고 있던<br>지구의 경고</h2>
+      <p style="font-size:16px;color:rgba(245,245,247,0.5);font-weight:300">데이터와 사진으로 보는 기후 변화의 실태</p>
+    </div>
 
+    <!-- 2열 그리드 -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px">
+      <!-- 지구 — Apollo 17 -->
+      <div class="fade-up" style="
+        border-radius:20px;overflow:hidden;position:relative;
+        height:clamp(220px,30vw,380px);
+        box-shadow:0 10px 40px rgba(0,0,0,0.5);
+      " data-img-wrap>
+        <img src="https://images.unsplash.com/photo-1614730321146-b6fa6a46bcb4?w=900&q=80"
+          alt="아폴로 17호에서 찍은 지구"
+          data-grad="linear-gradient(135deg,#0a1f3d,#0d3b6e)" data-label="🌍"
+          style="width:100%;height:100%;object-fit:cover;display:block;transition:transform 6s ease;"
+          onmouseover="this.style.transform='scale(1.05)'"
+          onmouseout="this.style.transform='scale(1)'">
+        <div style="position:absolute;inset:0;background:linear-gradient(180deg,transparent 30%,rgba(0,0,0,0.8) 100%)"></div>
+        <div style="position:absolute;bottom:24px;left:24px;right:24px">
+          <div style="font-size:10px;color:rgba(255,255,255,0.5);letter-spacing:2px;text-transform:uppercase;margin-bottom:5px">The Blue Marble</div>
+          <div style="font-size:16px;font-weight:500;color:#fff">Apollo 17, 1972</div>
+          <div style="font-size:12px;color:rgba(255,255,255,0.55);margin-top:3px">우리가 지켜야 할 단 하나의 지구</div>
+        </div>
+      </div>
+
+      <!-- 지구 온난화 열지도 -->
+      <div class="fade-up" style="
+        border-radius:20px;overflow:hidden;position:relative;
+        height:clamp(220px,30vw,380px);
+        box-shadow:0 10px 40px rgba(0,0,0,0.5);
+      ">
+        <img src="https://images.unsplash.com/photo-1561553590-267fc716698a?w=900&q=80"
+          onerror="this.src='https://images.unsplash.com/photo-1561553590-267fc716698a?w=900&q=80'"
+          alt="지구 기온 이상 시각화"
+          data-grad="linear-gradient(135deg,#3d0a00,#8b1a00)" data-label="🌡️"
+          style="width:100%;height:100%;object-fit:cover;display:block;transition:transform 6s ease;"
+          onmouseover="this.style.transform='scale(1.05)'"
+          onmouseout="this.style.transform='scale(1)'">
+        <div style="position:absolute;inset:0;background:linear-gradient(180deg,transparent 30%,rgba(0,0,0,0.85) 100%)"></div>
+        <div style="position:absolute;bottom:24px;left:24px;right:24px">
+          <div style="font-size:10px;color:rgba(255,100,80,0.8);letter-spacing:2px;text-transform:uppercase;margin-bottom:5px">⚠ 기온 이상</div>
+          <div style="font-size:16px;font-weight:500;color:#fff">지구 기온 변화 시각화</div>
+          <div style="font-size:12px;color:rgba(255,255,255,0.55);margin-top:3px">붉을수록 평균보다 높은 기온</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3열 그리드 — 해류, 빙하, 산불 -->
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px">
+      <!-- 지구 해류 시뮬레이션 -->
+      <div class="fade-up" style="
+        border-radius:18px;overflow:hidden;position:relative;
+        height:clamp(180px,20vw,280px);
+        box-shadow:0 8px 32px rgba(0,0,0,0.5);
+      ">
+        <img src="https://images.unsplash.com/photo-1505118380757-91f5f5632de0?w=900&q=80"
+          alt="NASA 지구 해류 시뮬레이션"
+          data-grad="linear-gradient(135deg,#001a33,#003d6b)" data-label="🌊"
+          style="width:100%;height:100%;object-fit:cover;display:block;transition:transform 5s ease;"
+          onmouseover="this.style.transform='scale(1.07)'"
+          onmouseout="this.style.transform='scale(1)'">
+        <div style="position:absolute;inset:0;background:linear-gradient(180deg,transparent 20%,rgba(0,0,0,0.85) 100%)"></div>
+        <div style="position:absolute;bottom:16px;left:18px;right:18px">
+          <div style="font-size:12px;font-weight:500;color:#fff">해류 시뮬레이션</div>
+          <div style="font-size:11px;color:rgba(255,255,255,0.5);margin-top:2px">NASA 슈퍼컴퓨터</div>
+        </div>
+      </div>
+
+      <!-- 북극 빙하 -->
+      <div class="fade-up" style="
+        border-radius:18px;overflow:hidden;position:relative;
+        height:clamp(180px,20vw,280px);
+        box-shadow:0 8px 32px rgba(0,0,0,0.5);
+      ">
+        <img src="https://images.unsplash.com/photo-1531366936337-7c912a4589a7?w=900&q=80"
+          alt="녹는 북극 빙하"
+          style="width:100%;height:100%;object-fit:cover;display:block;transition:transform 5s ease;"
+          onmouseover="this.style.transform='scale(1.07)'"
+          onmouseout="this.style.transform='scale(1)'">
+        <div style="position:absolute;inset:0;background:linear-gradient(180deg,transparent 20%,rgba(0,0,0,0.85) 100%)"></div>
+        <div style="position:absolute;bottom:16px;left:18px;right:18px">
+          <div style="font-size:12px;font-weight:500;color:#fff">녹아가는 북극 빙하</div>
+          <div style="font-size:11px;color:rgba(255,255,255,0.5);margin-top:2px">지구온난화의 직접적 결과</div>
+        </div>
+      </div>
+
+      <!-- 기후 변화 — 산불/고온 -->
+      <div class="fade-up" style="
+        border-radius:18px;overflow:hidden;position:relative;
+        height:clamp(180px,20vw,280px);
+        box-shadow:0 8px 32px rgba(0,0,0,0.5);
+      ">
+        <img src="https://images.unsplash.com/photo-1572278116640-337bc3c3b8ae?w=900&q=80"
+          onerror="this.src='https://images.unsplash.com/photo-1572278116640-337bc3c3b8ae?w=900&q=80'"
+          alt="기후변화로 인한 폭염과 산불"
+          data-grad="linear-gradient(135deg,#4a1500,#8b2500)" data-label="🔥"
+          style="width:100%;height:100%;object-fit:cover;display:block;transition:transform 5s ease;"
+          onmouseover="this.style.transform='scale(1.07)'"
+          onmouseout="this.style.transform='scale(1)'">
+        <div style="position:absolute;inset:0;background:linear-gradient(180deg,transparent 20%,rgba(0,0,0,0.85) 100%)"></div>
+        <div style="position:absolute;bottom:16px;left:18px;right:18px">
+          <div style="font-size:12px;font-weight:500;color:#fff">폭염과 산불</div>
+          <div style="font-size:11px;color:rgba(255,255,255,0.5);margin-top:2px">극단적 기상 현상의 증가</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DECISION -->
 <section class="decision-section" id="decision">
   <div class="section-inner">
     <div class="stat-label fade-up">의사결정</div>
     <h2 class="decision-title fade-up">당신의 선택은?</h2>
     <p class="decision-sub fade-up">주어진 주제에 대해 자신의 의견을 선택하고, 그 이유를 생각해 봅시다.</p>
     <div class="decision-question fade-up">
-      <h3>폭염 시대에 학교 냉방 정책은<br>무엇을 우선 고려해야 하는가?</h3>
+      <h3>폭염시대에 학교 냉방 정책은<br>무엇을 우선 고려해야 하는가?</h3>
     </div>
     <div class="decision-options">
       <div class="decision-opt" onclick="selectOption(this)">
@@ -664,7 +810,7 @@ footer p{font-size:12px;color:rgba(245,245,247,0.3);line-height:1.8}
         <div class="step-num">01</div>
         <div class="step-content">
           <h3>문제 상황 파악</h3>
-          <p>지구 평균 온도 상승, 온열질환 급증, 열대야 심화 등 현재 지구가 겪고 있는 변화를<br>자료를 통해 알아봅니다.</p>
+          <p>지구 평균 온도 상승, 온열질환 급증, 열대야 심화 등 현재 지구가 겪고 있는 변화를 자료를 통해 알아봅니다.</p>
         </div>
       </div>
       <div class="step">
@@ -678,7 +824,7 @@ footer p{font-size:12px;color:rgba(245,245,247,0.3);line-height:1.8}
         <div class="step-num">03</div>
         <div class="step-content">
           <h3>의사결정</h3>
-          <p>폭염 시대 학교 냉방 정책에서 무엇을 우선해야 하는지 자신의 입장을 선택합니다.</p>
+          <p>폭염시대 학교 냉방 정책에서 무엇을 우선해야 하는지 자신의 입장을 선택합니다.</p>
         </div>
       </div>
       <div class="step">
@@ -709,8 +855,12 @@ footer p{font-size:12px;color:rgba(245,245,247,0.3);line-height:1.8}
 <!-- FINAL CTA -->
 <section class="final-section">
   <div class="stat-label fade-up" style="margin-bottom:20px">실천 방안</div>
-  <h2 class="final-title fade-up">만약 당신이 학교장이라면<br><em>어떤 냉방 정책을 시행하겠습니까?</em></h2>
-  <p class="final-sub fade-up">과학적 근거와 다양한 의견을 종합하여<br>현실적인 해결 방안을 설계해 봅시다.</p>
+  <h2 class="final-title fade-up">만약 당신이 학교장이라면,<br><em>어떤 냉방 정책을</em><br>시행하겠습니까?</h2>
+  <p class="final-sub fade-up" style="text-align:center;max-width:600px;margin-left:auto;margin-right:auto;margin-bottom:56px">과학적 근거와 다양한 의견을 종합하여<br>현실적인 해결 방안을 설계해 봅시다.</p>
+  <div class="final-btns">
+    <a href="https://oniyuni.my.canva.site/dahljtohtb4" target="_blank" class="btn-primary">온열질환 자료 보기</a>
+    <a href="https://www.youtube.com/watch?v=uKqxlJt7VZo" target="_blank" class="btn-secondary">탐구 영상 보기</a>
+  </div>
 </section>
 
 <footer>
@@ -719,6 +869,26 @@ footer p{font-size:12px;color:rgba(245,245,247,0.3);line-height:1.8}
 </footer>
 
 <script>
+// IMAGE FALLBACK — gradient on error
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('img[data-grad]').forEach(img => {
+    img.addEventListener('error', function() {
+      const wrap = this.closest('[data-img-wrap]');
+      if (wrap) {
+        wrap.style.background = this.getAttribute('data-grad');
+        const label = this.getAttribute('data-label');
+        if (label) {
+          const el = document.createElement('div');
+          el.style.cssText = 'position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:64px;opacity:0.3;';
+          el.textContent = label;
+          wrap.appendChild(el);
+        }
+      }
+      this.style.opacity = '0';
+    });
+  });
+});
+
 // PROGRESS BAR
 window.addEventListener('scroll', () => {
   const s = document.documentElement;
@@ -775,12 +945,46 @@ if (videoContainer) videoObserver.observe(videoContainer);
 
 // DECISION SELECT
 function selectOption(el) {
-  document.querySelectorAll('.decision-opt').forEach(o => o.classList.remove('selected'));
-  el.classList.add('selected');
-  const msg = document.getElementById('selection-msg');
-  msg.style.display = 'block';
-  msg.style.color = '#30d158';
-  msg.innerHTML = '✓ <strong style="color:#f5f5f7">' + el.querySelector('.opt-title').textContent + '</strong> 선택 완료! 이제 근거를 찾아 토론해봅시다.';
+  const opts = document.querySelectorAll('.decision-opt');
+  const container = document.querySelector('.decision-options');
+  const alreadySelected = el.classList.contains('selected');
+
+  // Reset all
+  opts.forEach(o => {
+    o.classList.remove('selected','dismissed');
+  });
+  container.classList.remove('has-selection');
+
+  if (alreadySelected) {
+    // 클릭한 게 이미 선택된 거면 해제
+    document.getElementById('selection-msg').style.display = 'none';
+    return;
+  }
+
+  // Dismiss others first, then highlight selected
+  opts.forEach(o => {
+    if (o !== el) {
+      setTimeout(() => o.classList.add('dismissed'), 80);
+    }
+  });
+
+  setTimeout(() => {
+    container.classList.add('has-selection');
+    el.classList.add('selected');
+
+    // Add badge if not exists
+    if (!el.querySelector('.selected-badge')) {
+      const badge = document.createElement('div');
+      badge.className = 'selected-badge';
+      badge.innerHTML = '✓ 선택됨';
+      el.insertBefore(badge, el.firstChild);
+    }
+
+    const msg = document.getElementById('selection-msg');
+    msg.style.display = 'block';
+    msg.style.color = '#30d158';
+    msg.innerHTML = '✓ <strong style="color:#f5f5f7">' + el.querySelector('.opt-title').textContent + '</strong> 를 선택했습니다. 근거를 찾아 토론해봅시다! <span style="color:rgba(245,245,247,0.4);font-size:13px;margin-left:8px">다시 선택하려면 클릭</span>';
+  }, 200);
 }
 
 // SCROLL scale effect for hero earth

@@ -213,6 +213,39 @@ section{padding:120px 24px}
 
 /* SCIENCE SECTION */
 .science-section{background:#000}
+
+/* HEAT TITLE ANIMATION */
+.heat-char{
+  display:inline-block;
+  transition:color 0.5s ease, text-shadow 0.5s ease;
+}
+.heat-key{color:#f0a030}
+.heat-hot1{color:#ffd060}
+.heat-hot2{color:#ffb040}
+.heat-hot3{color:#ff8020}
+.heat-hot4{color:#ff5010}
+.heat-hot5{color:#ee2000}
+.heat-hot6{color:#cc0000;text-shadow:0 0 20px rgba(255,50,0,0.6)}
+
+/* HEAT BARS */
+.heat-bar{
+  width:24px;
+  height:var(--h);
+  background:var(--c);
+  border-radius:3px 3px 0 0;
+  transform:scaleY(0);
+  transform-origin:bottom;
+  transition:transform 0.6s cubic-bezier(0.34,1.56,0.64,1);
+  box-shadow:0 0 6px var(--c);
+  min-height:4px;
+}
+.heat-bar.active{transform:scaleY(1)}
+
+/* ANIMATED heat title glow on hover */
+#heatTitle:hover .heat-hot6{
+  text-shadow:0 0 30px rgba(255,50,0,0.8),0 0 60px rgba(255,50,0,0.4);
+}
+
 .science-header{text-align:center;margin-bottom:80px}
 .science-header h2{
   font-size:clamp(32px,5vw,56px);font-weight:700;
@@ -548,7 +581,35 @@ footer p{font-size:12px;color:rgba(245,245,247,0.3);line-height:1.8}
 <section class="science-section" id="science">
   <div class="section-inner">
     <div class="science-header">
-      <h2 class="fade-up" style="line-height:1.15">지구는 왜 점점<br>뜨거워질까?</h2>
+      <h2 class="fade-up" style="line-height:1.15" id="heatTitle">
+        <span class="heat-char">지</span><span class="heat-char">구</span><span class="heat-char">는</span><span class="heat-char"> </span><span class="heat-char">왜</span><span class="heat-char"> </span><span class="heat-char">점</span><span class="heat-char heat-key">점</span><br><span class="heat-char heat-hot1">뜨</span><span class="heat-char heat-hot2">거</span><span class="heat-char heat-hot3">워</span><span class="heat-char heat-hot4">질</span><span class="heat-char heat-hot5">까</span><span class="heat-char heat-hot6">?</span>
+      </h2>
+      <!-- 온도 상승 비주얼 바 -->
+      <div id="heatVisual" style="max-width:600px;margin:32px auto 0;opacity:0;transition:opacity 0.8s">
+        <div style="display:flex;align-items:flex-end;justify-content:center;gap:6px;height:80px;margin-bottom:12px">
+          <div class="heat-bar" data-delay="0" style="--h:20%;--c:#4a9eff"></div>
+          <div class="heat-bar" data-delay="100" style="--h:28%;--c:#5ba8ff"></div>
+          <div class="heat-bar" data-delay="200" style="--h:35%;--c:#6eb5ff"></div>
+          <div class="heat-bar" data-delay="300" style="--h:38%;--c:#82c2ff"></div>
+          <div class="heat-bar" data-delay="400" style="--h:42%;--c:#96cfff"></div>
+          <div class="heat-bar" data-delay="500" style="--h:45%;--c:#f0c040"></div>
+          <div class="heat-bar" data-delay="600" style="--h:52%;--c:#f0a030"></div>
+          <div class="heat-bar" data-delay="700" style="--h:60%;--c:#f08020"></div>
+          <div class="heat-bar" data-delay="800" style="--h:70%;--c:#e86010"></div>
+          <div class="heat-bar" data-delay="900" style="--h:80%;--c:#e04000"></div>
+          <div class="heat-bar" data-delay="1000" style="--h:88%;--c:#cc2000"></div>
+          <div class="heat-bar" data-delay="1100" style="--h:95%;--c:#b00000"></div>
+        </div>
+        <div style="display:flex;justify-content:space-between;padding:0 2px">
+          <span style="font-size:11px;color:rgba(245,245,247,0.4)">1880</span>
+          <span style="font-size:11px;color:rgba(245,245,247,0.4)">1950</span>
+          <span style="font-size:11px;color:#e04000;font-weight:500">2024 →</span>
+        </div>
+        <div style="text-align:center;margin-top:10px">
+          <span id="heatDegree" style="font-size:28px;font-weight:700;color:#e04000;letter-spacing:-1px">+0.0</span>
+          <span style="font-size:16px;color:rgba(245,245,247,0.5)">°C 상승</span>
+        </div>
+      </div>
       <p class="fade-up">과학 개념 탐구 — 온실 효과, 온실 기체, 지구온난화</p>
     </div>
 
@@ -1251,6 +1312,47 @@ window.addEventListener('scroll', () => {
   const pct = (s.scrollTop / (s.scrollHeight - s.clientHeight)) * 100;
   document.getElementById('progress').style.width = pct + '%';
 });
+
+// HEAT VISUAL ANIMATION
+const heatObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (!e.isIntersecting) return;
+
+    // Show container
+    const visual = document.getElementById('heatVisual');
+    if (visual) visual.style.opacity = '1';
+
+    // Animate bars with delay
+    document.querySelectorAll('.heat-bar').forEach(bar => {
+      const delay = parseInt(bar.dataset.delay || 0);
+      setTimeout(() => bar.classList.add('active'), delay);
+    });
+
+    // Animate degree counter
+    const degEl = document.getElementById('heatDegree');
+    if (degEl) {
+      let val = 0, target = 1.2;
+      const step = () => {
+        val = Math.min(val + 0.03, target);
+        degEl.textContent = '+' + val.toFixed(1);
+        if (val < target) requestAnimationFrame(step);
+      };
+      setTimeout(step, 800);
+    }
+
+    // Animate title chars — pulse red glow
+    document.querySelectorAll('.heat-char').forEach((c, i) => {
+      setTimeout(() => {
+        c.style.transition = 'color 0.4s, text-shadow 0.4s';
+      }, i * 60);
+    });
+
+    heatObserver.disconnect();
+  });
+}, { threshold: 0.4 });
+
+const heatTitle = document.getElementById('heatTitle');
+if (heatTitle) heatObserver.observe(heatTitle);
 
 // INTERSECTION OBSERVER for scroll animations
 const observer = new IntersectionObserver((entries) => {
